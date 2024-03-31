@@ -1,0 +1,67 @@
+.login-wrapper {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.login-wrapper .login-container {
+  width: 350px;
+  height: auto;
+}
+.login-wrapper .login-container div span {
+  cursor: pointer;
+}
+.login-wrapper .login-container .login-title {
+  font-size: 25px;
+  color: #009ee2;
+  font-weight: bold;
+}
+.login-wrapper .login-container input {
+  margin-bottom: 20px;
+  border: 1px solid #009ee2;
+  border-radius: 10px;
+  width: 300px;
+  padding: 10px 15px;
+}
+.login-wrapper .login-container button {
+  padding: 10px 25px;
+  border: none;
+  color: white;
+  background-color: #009ee2;
+  border-radius: 10px;
+}
+.login-wrapper .login-container .airplane-img {
+  position: absolute;
+  right: 0;
+  top: 65px;
+}
+.login-wrapper .login-images {
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+.login-wrapper .login-images svg {
+  bottom: 0;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.wrapper .aa {
+  width: 100%;
+  height: 100%;
+  background: url(../assets/loginImg/login-img.png) no-repeat center;
+  background-size: cover;
+}
+
+.red-error {
+  color: red;
+  font-weight: 500;
+}/*# sourceMappingURL=login.css.map */

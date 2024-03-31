@@ -1,0 +1,124 @@
+.users-list {
+  height: 80px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eff4fa;
+  padding: 5px 10px;
+  position: relative;
+  top: 10px;
+}
+.users-list span {
+  color: #222b45;
+}
+.users-list span:first-child {
+  font-weight: 600;
+}
+
+.user-title {
+  background-color: #eff4fa;
+}
+.user-title span {
+  color: #8f9bb3;
+  font-size: 16px;
+}
+
+.left-navigation {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 20px;
+  padding-left: 10px;
+}
+.left-navigation span {
+  color: #757575;
+  padding: 10px 5px;
+  letter-spacing: 0.5px;
+}
+
+.admin-wrapper {
+  height: 100vh;
+  position: relative;
+  top: 60px;
+}
+.admin-wrapper .admin-table {
+  border-radius: 20px;
+}
+.admin-wrapper .user-dashboard {
+  background-color: #e5e5e5;
+  padding: 25px;
+}
+.admin-wrapper .user-dashboard .user-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.admin-wrapper .user-dashboard .user-list-header h2 {
+  color: #4a85f6;
+  font-size: 20px;
+  font-weight: 700;
+}
+.admin-wrapper .user-dashboard .user-list-header button {
+  background-color: #4a85f6;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+.users-list:not(.user-title) {
+  background: white;
+}
+.users-list:not(.user-title) .user-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-submit-btn {
+  background-color: #4a85f6;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+.edit-wrapper {
+  height: 250px;
+}
+.edit-wrapper form button {
+  position: relative;
+  top: 55px;
+}
+
+.delete-button:not(.admin-submit-btn) {
+  color: #4a85f6;
+  background-color: white;
+  border: 1px solid #4a85f6;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-left: 5px;
+}
+
+.places-admin-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.places-admin-list .place-wrapper {
+  background: white;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.add-place-wrapper {
+  padding: 10px;
+}
+.add-place-wrapper > form {
+  display: flex;
+  flex-direction: column;
+}
+.add-place-wrapper > form > input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+}/*# sourceMappingURL=admin.css.map */

@@ -1,0 +1,232 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.container {
+  max-width: 1308px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+button {
+  cursor: pointer;
+}
+
+.travel-wrapper {
+  width: 100%;
+  height: 100vh;
+  background: url("../assets/travel.jpg") center/cover no-repeat;
+}
+
+.travel-search-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.travel-search-wrapper .travel-search {
+  width: 500px;
+  height: 30px;
+  border-radius: 30px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 25px 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  box-sizing: border-box;
+  color: gray;
+}
+
+.travel-description {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.travel-description h1 {
+  color: white;
+  font-weight: 500;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.place-wrapper {
+  padding: 20px;
+  border: 1px solid #dfdfdf;
+  border-radius: 10px;
+}
+.place-wrapper .place-description {
+  display: flex;
+  flex-direction: column;
+}
+.place-wrapper .place-description h2 {
+  font-weight: 600;
+  font-size: medium;
+}
+.place-wrapper .book-btn {
+  color: white;
+  width: 40%;
+  background-color: #fe1d60;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+.place-wrapper img {
+  width: 100%;
+  height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.travel-header {
+  height: 60px;
+  background: white;
+  position: fixed;
+  width: 100%;
+  border-bottom: 1px solid black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 9;
+}
+.travel-header ul {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  position: relative;
+  top: 10px;
+  align-items: center;
+}
+.travel-header ul li {
+  font-size: larger;
+  cursor: pointer;
+  margin-right: 25px;
+}
+.travel-header ul button {
+  color: white;
+  background-color: #fe1d60;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+.logout-dropdown {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+.logout-dropdown .profile {
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+}
+
+.logout-container {
+  background-color: white;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  padding: 10px;
+  width: 136px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.cursor {
+  cursor: pointer;
+}
+.cursor.active {
+  color: #4a85f6;
+  font-weight: 700;
+}/*# sourceMappingURL=components.css.map */
