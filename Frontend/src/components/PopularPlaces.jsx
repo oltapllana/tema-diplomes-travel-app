@@ -37,7 +37,10 @@ const PopularPlaces = () => {
       <div className="grid-3">
         {places.map((place) => (
           <div key={place.id} className="place-wrapper">
-            <img src={place.image} alt="aaaaaaaa" />
+            <img
+              src={require(`../../../Backend/uploads/${place.image}`)}
+              alt="aaaaaaaa"
+            />
             <div className="place-description">
               <h2>{place.title}</h2>
               <span>{place.description}</span>
@@ -47,7 +50,7 @@ const PopularPlaces = () => {
               >
                 See Details
               </button>
-              <ReviewPlaces placeId={place.id}/>
+              <ReviewPlaces placeId={place.id} />
             </div>
           </div>
         ))}

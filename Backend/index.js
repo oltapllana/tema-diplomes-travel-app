@@ -25,15 +25,14 @@ app.listen(3000, () => {
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./uploads/");
+    cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
-    const ext = file.originalname;
-    cb(null, new Date().toISOString() + file.originalname);
+    cb(null, file.originalname);
   },
 });
 
-const upload = multer({ dest: "/uploads" });
+const upload = multer({ storage: storage });
 
 let userIdCounter = 1;
 
@@ -270,26 +269,29 @@ app.delete("/users/:userId", async (req, res) => {
 
 let placesIdCounter = 1;
 
-app.post("/places", async (req, res) => {
-  console.log("ssssssssssssssssssssssssssss", req.body);
-  const { title, description, city, thingsToDo, image } = req.body;
+app.post("/places", upload.single("image"), async (req, res) => {
+  const { title, description, city } = req.body;
+  const { filename } = req.file;
+
   const placesId = placesIdCounter++;
+  console.log(req.body);
 
   try {
-    const newPlace = {
-      placesId,
-      title,
-      description,
-      image,
-      city,
-      thingsToDo: ["asssss", "lllllllllllll"],
-    };
+      const newPlace = {
+          placesId,
+          title,
+          description,
+          image: filename,
+          city,
+          thingsToDo: []
+      };
 
-    await database.collection("travelappcollection").insertOne(newPlace);
+      await database.collection("travelappcollection").insertOne(newPlace);
 
-    return res.status(201).json({ message: "Place added successfully" });
+      return res.status(201).json({ message: "Place added successfully" });
   } catch (error) {
-    console.error("Error adding place:", error);
-    return res.status(500).json({ error: "Internal server error" });
+      console.error("Error adding place:", error);
+      return res.status(500).json({ error: "Internal server error" });
   }
 });
+

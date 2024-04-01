@@ -5,4 +5,16 @@
 
 .flex {
   display: flex;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.gap-10 {
+  gap: 10px;
 }/*# sourceMappingURL=main.css.map */

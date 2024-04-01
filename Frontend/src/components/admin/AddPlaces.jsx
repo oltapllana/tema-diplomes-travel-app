@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import Modal from "../Modal";
+import { addNewPlace } from "../../api/places";
+import Plus from "../../assets/admin/Plus";
+import Minus from "../../assets/admin/Minus";
 
 const AddPlace = ({ setIsAddPlacesModalOpen }) => {
   const [formDatas, setFormData] = useState({
     title: "",
     description: "",
     city: "",
-    thingsToDo: "",
   });
   const [imageFile, setImageFile] = useState(null);
+  const [thingsToDo, setThingsToDo] = useState([{ text: "", image: null }]);
 
-  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", formDatas);
+  const [thingsToDoCounter, setThingsToDoCounter] = useState(1);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,48 +21,32 @@ const AddPlace = ({ setIsAddPlacesModalOpen }) => {
   };
 
   const handleImageChange = (e) => {
-    console.log(e.target.files);
-    var reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      console.log(reader.result);
-      setImageFile(reader.result);
-    };
-    reader.onerror = (error) => {
-      console.log("error", error);
-    };
+    setImageFile(e.target.files[0]);
   };
-
-  console.log(imageFile);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create form data object to send as multipart/form-data
     const formData = new FormData();
     formData.append("title", formDatas.title);
     formData.append("description", formDatas.description);
     formData.append("city", formDatas.city);
-    formData.append("thingsToDo", formDatas.thingsToDo);
+    formData.append("thingsToDo", JSON.stringify(thingsToDo));
     formData.append("image", imageFile);
 
-    console.log(formData);
+    const response = await addNewPlace(formData);
+  };
 
-    try {
-      const response = await fetch("http://localhost:3000/places", {
-        method: "POST",
-        body: formData,
-      });
+  const handleAddThingToDoText = (index, event) => {
+    const newInputs = [...thingsToDo];
+    newInputs[index] = { ...newInputs[index], text: event.target.value };
+    setThingsToDo(newInputs);
+  };
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data.message); // Log success message from backend
-      } else {
-        console.error("Failed to add place:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error adding place:", error.message);
-    }
+  const handleAddThingToDoImage = (index, event) => {
+    const newInputs = [...thingsToDo];
+    newInputs[index] = { ...newInputs[index], image: event.target.files[0] };
+    setThingsToDo(newInputs);
   };
 
   return (
@@ -88,12 +75,44 @@ const AddPlace = ({ setIsAddPlacesModalOpen }) => {
             onChange={handleChange}
             placeholder="City"
           />
-          <textarea
-            name="thingsToDo"
-            value={formDatas.thingsToDo}
-            onChange={handleChange}
-            placeholder="Things to do (separated by commas)"
-          ></textarea>
+          <div>
+            <span>Things to do</span>
+            {Array.from({ length: thingsToDoCounter }).map((_, index) => (
+              <div className="flex space-between gap-10">
+                <input
+                  type="text"
+                  name="thingsToDo"
+                  value={thingsToDo[index]?.text}
+                  onChange={(event) => handleAddThingToDoText(index, event)}
+                  placeholder="Add a thing to do"
+                />
+                <input
+                  type="file"
+                  className="aa"
+                  onChange={(event) => handleAddThingToDoImage(index, event)}
+                />
+
+                <div className="flex">
+                  <div
+                    className="cursor-pointer"
+                    onClick={() =>
+                      setThingsToDoCounter((prevState) => prevState + 1)
+                    }
+                  >
+                    <Plus />
+                  </div>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() =>
+                      setThingsToDoCounter((prevState) => prevState - 1)
+                    }
+                  >
+                    <Minus />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
           <button type="submit">Add Place</button>
         </form>
       </div>

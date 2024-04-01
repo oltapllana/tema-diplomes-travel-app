@@ -1,9 +1,17 @@
 import React from "react";
 
 const Modal = (props) => {
+  const modalRef = React.createRef();
+
+  const handleOutsideClick = (event) => {
+    const modalClass = `.${modalRef.current.classList[0]}`;
+    if (!event.target.closest(modalClass)) {
+      props.setIsDisplay(false);
+    }
+  };
   return (
-    <div className="modal-overlay">
-      <div className={`modal ${props.className}`}>
+    <div className="modal-overlay" onClick={(evt) => handleOutsideClick(evt)}>
+      <div className={`modal ${props.className}`} ref={modalRef}>
         <div className="modal-header">
           <p>{props.title}</p>
           <button

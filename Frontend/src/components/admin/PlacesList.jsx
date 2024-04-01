@@ -28,9 +28,13 @@ const PlacesList = () => {
         </div>
         <div className="admin-table places-admin-list">
           {places.map((place) => {
+            console.log(JSON.parse(place.thingsToDo));
             return (
               <div key={place.id} className="place-wrapper">
-                <img src={place.image} alt="aaaaaaaa" />
+                <img
+                  src={require(`../../../../Backend/uploads/${place.image}`)}
+                  alt={place.title}
+                />
                 <div className="place-description">
                   <h2>{place.title}</h2>
                   <span>{place.description}</span>
