@@ -43,6 +43,10 @@
 .admin-wrapper .admin-table {
   border-radius: 20px;
 }
+.admin-wrapper .admin-table .book-btn {
+  padding: 7px;
+  background-color: #4a85f6;
+}
 .admin-wrapper .user-dashboard {
   background-color: #e5e5e5;
   padding: 25px;
@@ -122,4 +126,21 @@
   padding: 10px;
   border: 1px solid lightgray;
   border-radius: 10px;
+}
+
+.place-details input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+}
+
+.book-btn {
+  padding: 7px;
+  background-color: #4a85f6;
+  color: white;
+  width: 40%;
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
 }/*# sourceMappingURL=admin.css.map */

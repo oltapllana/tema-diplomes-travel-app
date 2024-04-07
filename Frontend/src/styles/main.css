@@ -17,4 +17,12 @@
 
 .gap-10 {
   gap: 10px;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.align-center {
+  align-items: center;
 }/*# sourceMappingURL=main.css.map */

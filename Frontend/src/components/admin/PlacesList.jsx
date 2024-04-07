@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { getPlaces } from "../../api/places";
 import AddPlace from "./AddPlaces";
+import AddPlacesDetails from "./AddPlacesDetails";
 
 const PlacesList = () => {
   const [places, setPlaces] = useState([]);
   const [isAddPlacesModalOpen, setIsAddPlacesModalOpen] = useState(false);
+  const [isAddPlacesDetailsOpen, setIsAddPlacesDetailsOpen] = useState(false);
+  const [place, setPlace] = useState(null);
   useEffect(() => {
     const getPlacess = async () => {
       const response = await getPlaces();
@@ -28,7 +31,6 @@ const PlacesList = () => {
         </div>
         <div className="admin-table places-admin-list">
           {places.map((place) => {
-            console.log(JSON.parse(place.thingsToDo));
             return (
               <div key={place.id} className="place-wrapper">
                 <img
@@ -39,6 +41,17 @@ const PlacesList = () => {
                   <h2>{place.title}</h2>
                   <span>{place.description}</span>
                 </div>
+                <div className="flex flex-end">
+                  <button
+                    className="book-btn"
+                    onClick={() => {
+                      setPlace(place);
+                      setIsAddPlacesDetailsOpen(true);
+                    }}
+                  >
+                    Add details for this place
+                  </button>
+                </div>
               </div>
             );
           })}
@@ -46,6 +59,12 @@ const PlacesList = () => {
       </div>
       {isAddPlacesModalOpen && (
         <AddPlace setIsAddPlacesModalOpen={setIsAddPlacesModalOpen} />
+      )}
+      {isAddPlacesDetailsOpen && (
+        <AddPlacesDetails
+          setIsAddPlacesDetailsOpen={setIsAddPlacesDetailsOpen}
+          place={place}
+        />
       )}
     </>
   );

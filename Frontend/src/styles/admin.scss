@@ -40,8 +40,14 @@
   height: 100vh;
   position: relative;
   top: 60px;
+
   .admin-table {
     border-radius: 20px;
+
+    .book-btn {
+      padding: 7px;
+      background-color: #4a85f6;
+    }
   }
   .user-dashboard {
     background-color: #e5e5e5;
@@ -126,4 +132,23 @@
       border-radius: 10px;
     }
   }
+}
+
+.place-details {
+  input {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+  }
+}
+
+.book-btn {
+  padding: 7px;
+  background-color: #4a85f6;
+  color: white;
+  width: 40%;
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
 }

@@ -267,31 +267,58 @@ app.delete("/users/:userId", async (req, res) => {
   }
 });
 
-let placesIdCounter = 1;
+let placesIdCounter;
+
+const initializePlacesIdCounter = async () => {
+  const collection = database.collection("travelappcollection");
+
+  const lastPlace = await collection.findOne({}, { sort: { placesId: -1 } });
+  placesIdCounter = lastPlace ? lastPlace.placesId + 1 : 1;
+  return placesIdCounter;
+};
 
 app.post("/places", upload.single("image"), async (req, res) => {
+ let aa =  await initializePlacesIdCounter();
+
   const { title, description, city } = req.body;
   const { filename } = req.file;
 
-  const placesId = placesIdCounter++;
-  console.log(req.body);
+  const placesId = aa++;
 
   try {
-      const newPlace = {
-          placesId,
-          title,
-          description,
-          image: filename,
-          city,
-          thingsToDo: []
-      };
+    const newPlace = {
+      placesId,
+      title,
+      description,
+      image: filename,
+      city,
+    };
 
-      await database.collection("travelappcollection").insertOne(newPlace);
+    await database.collection("travelappcollection").insertOne(newPlace);
 
-      return res.status(201).json({ message: "Place added successfully" });
+    return res.status(201).json({ message: "Place added successfully" });
   } catch (error) {
-      console.error("Error adding place:", error);
-      return res.status(500).json({ error: "Internal server error" });
+    console.error("Error adding place:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
+app.post('/places/:placesId', upload.array('images'), async (req, res) => {
+  try {
+    const placesId = parseInt(req.params.placesId);
+    const texts = req.body.texts;
+    console.log(req.body);
+    console.log(req.files);
+    const images = req.files.map(file => file.filename);
+
+    await database.collection('travelappcollection').updateOne(
+      { placesId },
+      { $push: { thingstodo: { $each: texts.map((text, index) => ({ text, image: images[index] })) } } }
+    );
+
+    return res.status(200).json({ message: 'Text and images added successfully' });
+  } catch (error) {
+    console.error('Error adding text and images:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
