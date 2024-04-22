@@ -3,6 +3,7 @@ var Mongoclient = require("mongodb").MongoClient;
 var cors = require("cors");
 const multer = require("multer");
 const bcrypt = require("bcrypt");
+const path = require("path");
 
 var app = Express();
 app.use(Express.json());
@@ -28,7 +29,9 @@ const storage = multer.diskStorage({
     cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const fileExtension = path.extname(file.originalname);
+    cb(null, uniqueSuffix + fileExtension);
   },
 });
 
@@ -36,19 +39,15 @@ const upload = multer({ storage: storage });
 
 let userIdCounter = 1;
 
-// Endpoint to register a new user with a unique user ID
 app.post("/register", async (req, res) => {
   const { username, email, password, role } = req.body;
 
   try {
-    // Hash the password
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Generate a unique user ID
     const userId = userIdCounter++;
 
-    // Create the new user object
     const newUser = {
       userId,
       username,
@@ -57,17 +56,14 @@ app.post("/register", async (req, res) => {
       role,
     };
 
-    // Insert the new user into the database
     await database.collection("users").insertOne(newUser);
 
-    // Generate JWT token
     const token = jwt.sign(
       { username: newUser.username, role: newUser.role },
       JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    // Return success response with token
     return res
       .status(201)
       .json({ message: "User registered successfully", token });
@@ -278,7 +274,7 @@ const initializePlacesIdCounter = async () => {
 };
 
 app.post("/places", upload.single("image"), async (req, res) => {
- let aa =  await initializePlacesIdCounter();
+  let aa = await initializePlacesIdCounter();
 
   const { title, description, city } = req.body;
   const { filename } = req.file;
@@ -303,22 +299,35 @@ app.post("/places", upload.single("image"), async (req, res) => {
   }
 });
 
-app.post('/places/:placesId', upload.array('images'), async (req, res) => {
+app.post("/places/:placesId", upload.array("images"), async (req, res) => {
   try {
     const placesId = parseInt(req.params.placesId);
     const texts = req.body.texts;
-    console.log(req.body);
-    console.log(req.files);
-    const images = req.files.map(file => file.filename);
+    const places = req.body.places;
+    const images = req.files.map((file) => file.filename);
 
-    await database.collection('travelappcollection').updateOne(
-      { placesId },
-      { $push: { thingstodo: { $each: texts.map((text, index) => ({ text, image: images[index] })) } } }
-    );
+    await database
+      .collection("travelappcollection")
+      .updateOne(
+        { placesId },
+        {
+          $push: {
+            thingstodo: {
+              $each: texts.map((text, index) => ({
+                text,
+                image: images[index],
+                place: places[index],
+              })),
+            },
+          },
+        }
+      );
 
-    return res.status(200).json({ message: 'Text and images added successfully' });
+    return res
+      .status(200)
+      .json({ message: "Text and images added successfully" });
   } catch (error) {
-    console.error('Error adding text and images:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    console.error("Error adding text and images:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
