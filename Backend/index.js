@@ -331,3 +331,16 @@ app.post("/places/:placesId", upload.array("images"), async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 });
+
+app.post("/travel-plan", async (req, res) => {
+  try {
+    const travelPlan = req.body;
+
+    await database.collection("travelplans").insertOne(travelPlan);
+
+    return res.status(201).json({ message: "Travel plan saved successfully" });
+  } catch (error) {
+    console.error("Error saving travel plan:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});

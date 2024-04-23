@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import Bookmark from "../../assets/Bookmark";
 
 const PlaceDetails = ({ place, setShowPlaceDetails }) => {
-  console.log(place);
+  console.log("place", place);
+  const [isSaved, setIsSaved] = useState(false);
   return (
     <div className="user-dashboard">
       <button
@@ -26,7 +28,17 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
           {place.thingstodo.map((thing) => {
             return (
               <div className="flex column-direction place-wrapper white-bg">
-                <h1 className="margin-0">{thing.place}</h1>
+                <div className="flex space-between">
+                  <h1 className="margin-0">{thing.place}</h1>
+                  <span
+                    onClick={() => {
+                      setIsSaved(true);
+                    }}
+                  >
+                    {/* <Bookmark color={isSaved ? "yellow" : ""} /> */}
+                    <Bookmark />
+                  </span>
+                </div>
                 <img
                   src={require(`../../../../Backend/uploads/${thing.image}`)}
                   alt={place.title}
