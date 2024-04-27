@@ -4,6 +4,7 @@ var cors = require("cors");
 const multer = require("multer");
 const bcrypt = require("bcrypt");
 const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 
 var app = Express();
 app.use(Express.json());
@@ -304,24 +305,25 @@ app.post("/places/:placesId", upload.array("images"), async (req, res) => {
     const placesId = parseInt(req.params.placesId);
     const texts = req.body.texts;
     const places = req.body.places;
+    const prices = req.body.prices;
     const images = req.files.map((file) => file.filename);
 
-    await database
-      .collection("travelappcollection")
-      .updateOne(
-        { placesId },
-        {
-          $push: {
-            thingstodo: {
-              $each: texts.map((text, index) => ({
-                text,
-                image: images[index],
-                place: places[index],
-              })),
-            },
+    await database.collection("travelappcollection").updateOne(
+      { placesId },
+      {
+        $push: {
+          thingstodo: {
+            $each: texts.map((text, index) => ({
+              id: uuidv4(),
+              text,
+              prices: prices[index],
+              image: images[index],
+              place: places[index],
+            })),
           },
-        }
-      );
+        },
+      }
+    );
 
     return res
       .status(200)
@@ -334,13 +336,56 @@ app.post("/places/:placesId", upload.array("images"), async (req, res) => {
 
 app.post("/travel-plan", async (req, res) => {
   try {
-    const travelPlan = req.body;
+    const { city, placePlan } = req.body;
 
-    await database.collection("travelplans").insertOne(travelPlan);
+    const existingPlan = await database
+      .collection("travelplans")
+      .findOne({ city });
 
-    return res.status(201).json({ message: "Travel plan saved successfully" });
+    if (existingPlan) {
+      const duplicatePlacePlans = existingPlan.placePlan.filter((plan) =>
+        existingPlan.placePlan.some((p) => p.id === plan.id)
+      );
+
+      if (duplicatePlacePlans.length > 0) {
+        return res
+          .status(409)
+          .json({ error: "Duplicate placePlan IDs found in the database" });
+      }
+
+      // Update existing record
+      await database
+        .collection("travelplans")
+        .updateOne({ city }, { $push: { placePlan: { $each: placePlan } } });
+
+      return res.status(200).json({
+        message: "Place plans added to existing travel plan successfully",
+      });
+    } else {
+      // Insert new record
+      await database.collection("travelplans").insertOne({ city, placePlan });
+
+      return res
+        .status(201)
+        .json({ message: "Travel plan saved successfully" });
+    }
   } catch (error) {
     console.error("Error saving travel plan:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/travel-plans", async (req, res) => {
+  try {
+    // Retrieve all travel plans from the database
+    const travelPlans = await database
+      .collection("travelplans")
+      .find({})
+      .toArray();
+
+    return res.status(200).json(travelPlans);
+  } catch (error) {
+    console.error("Error fetching travel plans:", error);
     return res.status(500).json({ error: "Internal server error" });
   }
 });

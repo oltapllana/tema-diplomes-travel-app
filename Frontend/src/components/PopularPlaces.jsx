@@ -61,31 +61,7 @@ const PopularPlaces = () => {
               <div className="place-description">
                 <h2>{place.title}</h2>
                 <span>{getText(place.description, 100, place)}</span>
-                <button
-                  className="book-btn"
-                  onClick={async () => {
-                    setShowDetails(true);
-                    setPlaceDetails(place);
-                    await fetch("http://localhost:3000/travel-plan", {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify(
-                         {
-                          city: "istanbul",
-                          placePlan: {
-                            text: "Balat, Istanbul's picturesque neighborhood, enchants with its pastel houses and vibrant art scene. Lose yourself in its charming streets, where history and creativity intertwine seamlessly.",
-                            image: "1713813319193-852269541.jpg",
-                            place: "Balat",
-                          },
-                        }
-                      ),
-                    });
-                  }}
-                >
-                  See Details
-                </button>
+                <button className="book-btn">See Details</button>
                 <ReviewPlaces placeId={place.id} />
               </div>
             </div>

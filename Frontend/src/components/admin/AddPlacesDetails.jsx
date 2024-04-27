@@ -5,7 +5,7 @@ import Modal from "../Modal";
 
 const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
   const [thingsToDo, setThingsToDo] = useState([
-    { text: "", place: "", image: null },
+    { text: "", place: "", image: null, price: "" },
   ]);
   const [shouldSumbit, setShouldSumbit] = useState(false);
   const [thingsToDoCounter, setThingsToDoCounter] = useState(1);
@@ -13,10 +13,11 @@ const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
   const addTextAndImages = async (placesId, textAndImagesData) => {
     try {
       const formData = new FormData();
-      textAndImagesData.forEach(({ text, place, image }, index) => {
+      textAndImagesData.forEach(({ text, place, image, price }, index) => {
         formData.append("texts", text);
         formData.append("places", place);
         formData.append("images", image);
+        formData.append("prices", price);
       });
 
       const response = await fetch(`http://localhost:3000/places/${placesId}`, {
@@ -52,6 +53,12 @@ const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
     setThingsToDo(newInputs);
   };
 
+  const handleAddThingToDoPrice = (index, event) => {
+    const newInputs = [...thingsToDo];
+    newInputs[index] = { ...newInputs[index], price: event.target.value };
+    setThingsToDo(newInputs);
+  };
+
   return (
     <Modal setIsDisplay={setIsAddPlacesDetailsOpen} title="Things to do">
       <div className="place-details">
@@ -76,7 +83,13 @@ const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
               className="aa"
               onChange={(event) => handleAddThingToDoImage(index, event)}
             />
-
+            <input
+              type="text"
+              name="price"
+              value={thingsToDo[index]?.price}
+              onChange={(event) => handleAddThingToDoPrice(index, event)}
+              placeholder="Add price"
+            />
             <div className="flex align-center gap-10">
               <div
                 className="cursor-pointer"

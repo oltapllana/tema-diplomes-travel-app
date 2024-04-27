@@ -51,8 +51,12 @@ export default function MainHeader(props) {
     <header className="travel-header">
       {profile?.role === "user" && (
         <ul>
-          <li>Popular places</li>
-          <li>Wishlist</li>
+          <li>
+            <span onClick={() => navigate("/")}>Homepage</span>
+          </li>
+          <li>
+            <span onClick={() => navigate("/wishlist")}>Wishlist</span>
+          </li>
           <li>Food</li>
           <li>
             {!isLoggedin && (
