@@ -128,14 +128,16 @@
   border-radius: 10px;
 }
 
-.place-details input {
+.place-details input,
+.availability-form input {
   margin-bottom: 10px;
   padding: 10px;
   border: 1px solid lightgray;
   border-radius: 10px;
 }
 
-.book-btn {
+.book-btn,
+.availability-btn {
   padding: 7px;
   background-color: #4a85f6;
   color: white;

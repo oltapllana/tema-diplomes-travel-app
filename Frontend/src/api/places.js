@@ -8,14 +8,11 @@ export const getPlaces = async () => {
 };
 
 export const addNewPlace = async (formData) => {
-  console.log("data", formData);
   try {
     const response = await fetch("http://localhost:3000/places", {
       method: "POST",
       body: formData,
     });
-
-    console.log("response", response);
 
     if (!response.ok) {
       throw new Error("Failed to add new place");

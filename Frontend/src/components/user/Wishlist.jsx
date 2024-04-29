@@ -22,27 +22,34 @@ const Wishlist = () => {
   }, []);
   return (
     <>
-      <MainHeader />{" "}
-      <div className='wishlist'>
-        <ul>
-          {travelPlans.map((plan) => (
-            <li key={plan._id}>
-              <h2>{plan.city}</h2>
-              <ul>
-                {plan.placePlan.map((place) => (
-                  <li key={place.id}>
-                    <p>{place.text}</p>
-                    <p>{place.place}</p>
-                    <img
-                      src={require(`../../../../Backend/uploads/${place.image}`)}
-                      alt={place.place}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
+      <MainHeader />
+      <div className="container">
+        {travelPlans.map((plan) => (
+          <div className="wishlist-item-wrapper">
+            <h2>{plan.city.toUpperCase()}</h2>
+            {plan.placePlan.map((place) => {
+              return (
+                <div className="wishlist-item margin-bottom-20">
+                  <h1>{place.place}</h1>
+                  <div className="flex gap-20">
+                    <div>
+                      <img
+                        src={require(`../../../../Backend/uploads/${place.image}`)}
+                        alt={place.place}
+                      />
+                    </div>
+                    <div className="flex column-direction full-width">
+                      <p>{place.text}</p>
+                      <span className="flex flex-end align-end full-height">
+                        {place.price}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ))}
       </div>
     </>
   );

@@ -68,7 +68,6 @@ const UsersList = () => {
 
   const handleEditClick = (user) => {
     setIsEditModalOpen(true);
-    console.log(user);
     setUserInfo(user);
   };
 

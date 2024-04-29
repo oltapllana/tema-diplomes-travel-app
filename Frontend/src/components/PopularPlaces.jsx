@@ -10,8 +10,6 @@ const PopularPlaces = () => {
   const [showDetails, setShowDetails] = useState(false);
   const authToken = localStorage.getItem("authToken");
 
-  console.log(placeDetails);
-
   useEffect(() => {
     const getPlacess = async () => {
       const response = await getPlaces();
@@ -50,6 +48,7 @@ const PopularPlaces = () => {
         <div className="grid-3">
           {places.map((place) => (
             <div key={place.id} className="place-wrapper">
+              <h1 className='margin-0'>{place.city}</h1>
               <img
                 src={require(`../../../Backend/uploads/${place.image}`)}
                 alt="aaaaaaaa"

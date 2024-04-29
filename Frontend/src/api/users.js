@@ -42,15 +42,12 @@ export const deleteUser = async (userId) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        // Add any authentication headers if needed
       },
     });
 
     if (response.ok) {
-      // User deleted successfully
       console.log("User deleted successfully");
     } else {
-      // Handle error response
       console.error("Failed to delete user:", response.statusText);
     }
   } catch (error) {

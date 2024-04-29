@@ -24,6 +24,9 @@
   gap: 10px;
 }
 
+.gap-20 {
+  gap: 20px;
+}
 .flex-end {
   justify-content: flex-end;
 }
@@ -66,4 +69,16 @@
 
 .margin-0 {
   margin: 0 !important;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.align-end {
+  align-items: flex-end;
 }

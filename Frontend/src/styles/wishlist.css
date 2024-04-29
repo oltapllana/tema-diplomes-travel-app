@@ -1,0 +1,16 @@
+.wishlist-item-wrapper {
+  position: relative;
+  top: 70px;
+}
+.wishlist-item-wrapper .wishlist-item {
+  border: 1px solid #dcdfe4;
+  border-radius: 10px;
+  padding: 16px;
+}
+.wishlist-item-wrapper .wishlist-item h1 {
+  margin: 0;
+}
+.wishlist-item-wrapper img {
+  width: 200px;
+  height: auto;
+}/*# sourceMappingURL=wishlist.css.map */

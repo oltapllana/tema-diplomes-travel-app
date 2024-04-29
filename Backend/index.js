@@ -342,27 +342,25 @@ app.post("/travel-plan", async (req, res) => {
       .collection("travelplans")
       .findOne({ city });
 
-    if (existingPlan) {
-      const duplicatePlacePlans = existingPlan.placePlan.filter((plan) =>
-        existingPlan.placePlan.some((p) => p.id === plan.id)
-      );
-
-      if (duplicatePlacePlans.length > 0) {
+      if (existingPlan) {
+      if (
+        existingPlan.placePlan.some(
+          (existingPlace) => existingPlace.id === placePlan.id
+        )
+      ) {
         return res
           .status(409)
           .json({ error: "Duplicate placePlan IDs found in the database" });
       }
 
-      // Update existing record
       await database
         .collection("travelplans")
-        .updateOne({ city }, { $push: { placePlan: { $each: placePlan } } });
+        .updateOne({ city }, { $push: { placePlan: { $each: [placePlan] } } });
 
       return res.status(200).json({
         message: "Place plans added to existing travel plan successfully",
       });
     } else {
-      // Insert new record
       await database.collection("travelplans").insertOne({ city, placePlan });
 
       return res
@@ -377,7 +375,6 @@ app.post("/travel-plan", async (req, res) => {
 
 app.get("/travel-plans", async (req, res) => {
   try {
-    // Retrieve all travel plans from the database
     const travelPlans = await database
       .collection("travelplans")
       .find({})
@@ -389,3 +386,31 @@ app.get("/travel-plans", async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 });
+
+app.post("/set-availability/:planId", async (req, res) => {
+  try {
+    const planId = req.params.planId;
+    const { ticketsLeft } = req.body;
+
+    const { placesId } = await database.collection("travelappcollection").findOne(
+      { "thingstodo.id": planId },
+      { projection: { placesId: 1, "thingstodo.$": 1 } }
+    );
+
+    if (!placesId) {
+      return res.status(404).json({ error: "Activity not found" });
+    }
+
+    await database.collection("travelappcollection").updateOne(
+      { "placesId": placesId, "thingstodo.id": planId },
+      { $set: { "thingstodo.$.availability.ticketsLeft": ticketsLeft } }
+    );
+
+    return res.status(200).json({ message: "Tickets left updated successfully" });
+  } catch (error) {
+    console.error("Error updating tickets left:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+

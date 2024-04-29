@@ -45,8 +45,6 @@ export default function MainHeader(props) {
     }
   };
 
-  console.log(profile);
-
   return (
     <header className="travel-header">
       {profile?.role === "user" && (

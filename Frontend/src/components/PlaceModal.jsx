@@ -2,7 +2,6 @@ import React from "react";
 import Modal from "./Modal";
 
 const PlaceModal = (props) => {
-    console.log(props);
   return (
     <Modal
       isDisplay={props.isDetailsModalOpen}

@@ -28,6 +28,7 @@ export default function Login() {
     if (response.message) {
     }
     dispatch(setUserRole(response.role));
+    localStorage.setItem("role", response.role);
     localStorage.setItem("authToken", response.token);
     localStorage.setItem("username", response.username);
 
