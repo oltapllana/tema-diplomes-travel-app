@@ -19,9 +19,6 @@ const Homepage = () => {
               <SearchDestinationInput />
             </div>
           </div>
-          <div className="container">
-            <PopularPlaces />
-          </div>
         </>
       )}
       {isShown && <LoginRegister />}

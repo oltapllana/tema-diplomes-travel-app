@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import CustomDateRange from "../CustomDateRange";
 import Modal from "./../Modal";
 
-const Availability = ({ thingToDo, setAvailability, availability }) => {
+const Availability = ({
+  thingToDo,
+  setAvailability,
+  availability,
+  placeId,
+}) => {
   const [ticketsLeft, setTicketsLeft] = useState(0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      await fetch(`http://localhost:3000/set-availability/${thingToDo.id}`, {
+    const response = await fetch(
+      `http://localhost:3000/set-availability/${placeId}/${thingToDo.id}`,
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -17,10 +23,9 @@ const Availability = ({ thingToDo, setAvailability, availability }) => {
         body: JSON.stringify({
           ticketsLeft,
         }),
-      });
-    } catch (error) {
-      console.error("Error setting availability and tickets left:", error);
-    }
+      }
+    );
+    setAvailability(false);
   };
 
   return (
@@ -29,13 +34,16 @@ const Availability = ({ thingToDo, setAvailability, availability }) => {
       setIsDisplay={setAvailability}
       title={`Number of tickets for ${thingToDo.place}`}
     >
-      <form onSubmit={handleSubmit} className="flex column-direction availability-form">
+      <form
+        onSubmit={handleSubmit}
+        className="flex column-direction availability-form"
+      >
         <label htmlFor="ticketsLeft">Number of available tickets:</label>
         <input
           type="number"
           id="ticketsLeft"
           value={ticketsLeft}
-          onChange={(e) => setTicketsLeft(e.target.value)}
+          onChange={(e) => setTicketsLeft(parseInt(e.target.value))}
         />
         <button className="availability-btn" type="submit">
           Set Availability

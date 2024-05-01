@@ -53,7 +53,13 @@ export default function MainHeader(props) {
             <span onClick={() => navigate("/")}>Homepage</span>
           </li>
           <li>
+            <span onClick={() => navigate("/places")}>Places</span>
+          </li>
+          <li>
             <span onClick={() => navigate("/wishlist")}>Wishlist</span>
+          </li>
+          <li>
+            <span onClick={() => navigate("/bookings")}>Bookings</span>
           </li>
           <li>Food</li>
           <li>

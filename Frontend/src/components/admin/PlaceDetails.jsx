@@ -18,6 +18,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        cityId: place._id,
         city: place.city,
         placePlan: {
           id: thing.id,
@@ -93,14 +94,6 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
                       Set Availability
                     </button>
                   )}
-                  {role === "admin" && availability && (
-                    <Availability
-                      thingToDo={thing}
-                      setAvailability={setAvailability}
-                      availability={availability}
-                    />
-                  )}
-
                   <div className="flex flex-end">
                     <span>{thing.prices}</span>
                   </div>
@@ -112,6 +105,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
       </div>
       {role === "admin" && availability && (
         <Availability
+          placeId={place._id}
           thingToDo={thing}
           setAvailability={setAvailability}
           availability={availability}

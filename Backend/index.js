@@ -5,6 +5,7 @@ const multer = require("multer");
 const bcrypt = require("bcrypt");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
+const { ObjectId } = require("mongodb");
 
 var app = Express();
 app.use(Express.json());
@@ -14,7 +15,7 @@ var CONNECTION_STRING =
   "mongodb+srv://oltapllana:Oltapllana123.,@thesis.euffiqk.mongodb.net/?retryWrites=true&w=majority&appName=thesis";
 var DATABASENAME = "travelappdb";
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "fadmgkli845hkjejksdiooi3ljrky"; // Replace with your own secret key
+const JWT_SECRET = "fadmgkli845hkjejksdiooi3ljrky";
 
 var database;
 
@@ -336,13 +337,13 @@ app.post("/places/:placesId", upload.array("images"), async (req, res) => {
 
 app.post("/travel-plan", async (req, res) => {
   try {
-    const { city, placePlan } = req.body;
+    const { cityId, city, placePlan } = req.body;
 
     const existingPlan = await database
       .collection("travelplans")
-      .findOne({ city });
+      .findOne({ cityId });
 
-      if (existingPlan) {
+    if (existingPlan) {
       if (
         existingPlan.placePlan.some(
           (existingPlace) => existingPlace.id === placePlan.id
@@ -361,7 +362,9 @@ app.post("/travel-plan", async (req, res) => {
         message: "Place plans added to existing travel plan successfully",
       });
     } else {
-      await database.collection("travelplans").insertOne({ city, placePlan });
+      await database
+        .collection("travelplans")
+        .insertOne({ cityId, city, placePlan: [placePlan] });
 
       return res
         .status(201)
@@ -386,31 +389,79 @@ app.get("/travel-plans", async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 });
-
-app.post("/set-availability/:planId", async (req, res) => {
+app.delete("/travel-plans/:id/:planId", async (req, res) => {
   try {
-    const planId = req.params.planId;
-    const { ticketsLeft } = req.body;
+    const travelPlanId = req.params.id;
+    const placePlanId = req.params.planId;
 
-    const { placesId } = await database.collection("travelappcollection").findOne(
-      { "thingstodo.id": planId },
-      { projection: { placesId: 1, "thingstodo.$": 1 } }
-    );
-
-    if (!placesId) {
-      return res.status(404).json({ error: "Activity not found" });
+    const travelPlan = await database
+      .collection("travelplans")
+      .findOne({ _id: ObjectId(travelPlanId) });
+    if (!travelPlan) {
+      return res.status(404).json({ error: "Travel plan not found" });
     }
 
-    await database.collection("travelappcollection").updateOne(
-      { "placesId": placesId, "thingstodo.id": planId },
-      { $set: { "thingstodo.$.availability.ticketsLeft": ticketsLeft } }
-    );
+    if (travelPlan.placePlan.length === 1) {
+      await database
+        .collection("travelplans")
+        .deleteOne({ _id: new ObjectId(travelPlanId) });
+    } else {
+      await database
+        .collection("travelplans")
+        .updateOne(
+          { _id: new ObjectId(travelPlanId) },
+          { $pull: { placePlan: { id: placePlanId } } }
+        );
+    }
 
-    return res.status(200).json({ message: "Tickets left updated successfully" });
+    return res.status(200).json({ message: "Place deleted successfully" });
   } catch (error) {
-    console.error("Error updating tickets left:", error);
+    console.error("Error deleting place:", error);
     return res.status(500).json({ error: "Internal server error" });
   }
 });
 
+app.post("/set-availability/:cityId/:thingId", async (req, res) => {
+  try {
+    const cityId = req.params.cityId;
+    const thingId = req.params.thingId;
+    const { ticketsLeft } = req.body;
 
+    const availability = {
+      cityId,
+      thingId,
+      ticketsLeft,
+    };
+
+    await database.collection("availability").insertOne(availability);
+
+    return res.status(200).json({
+      message: "Tickets left updated and availability stored successfully",
+    });
+  } catch (error) {
+    console.error(
+      "Error updating tickets left and storing availability:",
+      error
+    );
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/availability/:cityId/:thingId", async (req, res) => {
+  try {
+    const { cityId, thingId } = req.params;
+
+    const availability = await database
+      .collection("availability")
+      .findOne({ cityId, thingId });
+
+    if (!availability) {
+      return res.status(404).json({ error: "Availability not found" });
+    }
+
+    return res.status(200).json(availability);
+  } catch (error) {
+    console.error("Error retrieving availability:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});

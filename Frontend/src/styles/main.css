@@ -20,6 +20,10 @@
   cursor: pointer;
 }
 
+.gap-5 {
+  gap: 5px;
+}
+
 .gap-10 {
   gap: 10px;
 }
@@ -82,4 +86,28 @@
 
 .align-end {
   align-items: flex-end;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.top-65 {
+  top: 65px;
+}
+
+.btn {
+  padding: 7px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+.btn.pink-btn {
+  background-color: #fe1d60;
+  color: white;
+}
+.btn.white-btn {
+  background-color: white;
+  border: 1px solid #fe1d60;
+  color: #fe1d60;
 }/*# sourceMappingURL=main.css.map */
