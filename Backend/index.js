@@ -465,3 +465,35 @@ app.get("/availability/:cityId/:thingId", async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 });
+
+app.post("/book/:thingId", async (req, res) => {
+  try {
+    const thingId = req.params.thingId;
+    const { numTickets, startDate, hour } = req.body;
+    const availability = await database
+      .collection("availability")
+      .findOne({ thingId });
+    if (!availability) {
+      return res.status(404).json({ message: "Availability not found" });
+    }
+
+    if (numTickets > availability.ticketsLeft) {
+      return res.status(400).json({ message: "Not enough tickets available" });
+    }
+    availability.ticketsLeft -= numTickets;
+    await database
+      .collection("availability")
+      .updateOne({ thingId }, { $set: availability });
+
+    const cityId = availability.cityId;
+
+    await database
+      .collection("bookings")
+      .insertOne({ thingId, numTickets, startDate, hour, cityId });
+
+    res.json({ message: "Tickets booked successfully" });
+  } catch (error) {
+    console.error("Error booking tickets:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});

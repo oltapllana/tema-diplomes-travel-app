@@ -1,0 +1,31 @@
+.book-ticket-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.book-ticket-form span {
+  margin-bottom: 10px;
+}
+.book-ticket-form input,
+.book-ticket-form select {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+.book-ticket-form label {
+  margin-bottom: 10px;
+}
+.book-ticket-form button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+.book-ticket-form button:not(.ticket-number) {
+  background-color: #fe1d60;
+  color: #fff;
+  border-radius: 4px;
+}
+.book-ticket-form button:hover:not(.ticket-number) {
+  background-color: #d40f4f;
+}/*# sourceMappingURL=booking.css.map */

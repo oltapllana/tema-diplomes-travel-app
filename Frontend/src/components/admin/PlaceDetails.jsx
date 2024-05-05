@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Bookmark from "../../assets/Bookmark";
 import Modal from "./../Modal";
 import Availability from "./Availability";
+import BookTicket from "../user/BookTicket";
 
 const PlaceDetails = ({ place, setShowPlaceDetails }) => {
   const role = localStorage.getItem("role");
@@ -10,6 +11,10 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [availability, setAvailability] = useState(false);
   const [thing, setThing] = useState(null);
+  const [openAvailabilityModal, setOpenAvailabilityModal] = useState(false);
+  const [tickets, setTickets] = useState(0);
+  const [placeId, setPlaceId] = useState(null);
+  const [placeTicket, setPlaceTicket] = useState(null);
 
   const addToWishlist = async (thing) => {
     const response = await fetch("http://localhost:3000/travel-plan", {
@@ -34,6 +39,18 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
       setErrorMessage("You've already added this place to your wishlist.");
       setError(true);
     }
+  };
+
+  const checkAvailability = async (placeId) => {
+    setOpenAvailabilityModal(true);
+    const getAvailability = async () => {
+      const response = await fetch(
+        `http://localhost:3000/availability/${place._id}/${placeId}`
+      );
+      return response.json();
+    };
+    const availability = await getAvailability();
+    setTickets(availability.ticketsLeft);
   };
 
   return (
@@ -94,9 +111,23 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
                       Set Availability
                     </button>
                   )}
+
                   <div className="flex flex-end">
                     <span>{thing.prices}</span>
                   </div>
+                  {role === "user" && (
+                    <button
+                      className="btn pink-btn"
+                      onClick={() => {
+                        setPlaceTicket(thing.place);
+                        setPlaceId(thing.id);
+                        setOpenAvailabilityModal(true);
+                        checkAvailability(thing.id);
+                      }}
+                    >
+                      Book now
+                    </button>
+                  )}
                 </div>
               );
             })}
@@ -109,6 +140,15 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
           thingToDo={thing}
           setAvailability={setAvailability}
           availability={availability}
+        />
+      )}
+      {role === "user" && openAvailabilityModal && (
+        <BookTicket
+          openAvailabilityModal={openAvailabilityModal}
+          setOpenAvailabilityModal={setOpenAvailabilityModal}
+          tickets={tickets}
+          placeTicket={placeTicket}
+          placeId={placeId}
         />
       )}
       {error && (

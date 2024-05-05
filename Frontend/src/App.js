@@ -4,6 +4,7 @@ import "./styles/modal.css";
 import "./styles/main.css";
 import "./styles/admin.css";
 import "./styles/wishlist.css";
+import "./styles/booking.css";
 import Homepage from "./components/Homepage";
 import "./styles/components.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import MainHeader from "./../MainHeader";
 import Modal from "./../Modal";
+import BookTicket from "./BookTicket";
 
 const Wishlist = () => {
   const [travelPlans, setTravelPlans] = useState([]);
   const [tickets, setTickets] = useState(0);
   const [openAvailabilityModal, setOpenAvailabilityModal] = useState(false);
   const [placeTicket, setPlaceTicket] = useState(null);
+  const [placeId, setPlaceId] = useState(null);
 
   const fetchTravelPlans = async () => {
     try {
@@ -93,6 +95,7 @@ const Wishlist = () => {
                         onClick={() => {
                           setPlaceTicket(place.place);
                           checkAvailability(plan.cityId, place.id);
+                          setPlaceId(place.id)
                         }}
                         className="btn pink-btn"
                       >
@@ -107,13 +110,13 @@ const Wishlist = () => {
         })}
       </div>
       {openAvailabilityModal && (
-        <Modal
-          isDisplay={openAvailabilityModal}
-          setIsDisplay={setOpenAvailabilityModal}
-          title={`Available ticket for: ${placeTicket}`}
-        >
-          <span>Tickets left: {tickets}</span>
-        </Modal>
+        <BookTicket
+          openAvailabilityModal={openAvailabilityModal}
+          setOpenAvailabilityModal={setOpenAvailabilityModal}
+          tickets={tickets}
+          placeTicket={placeTicket}
+          placeId={placeId}
+        />
       )}
     </>
   );
