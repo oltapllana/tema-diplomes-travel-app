@@ -53,10 +53,8 @@ const UsersList = () => {
     }
   };
 
-  // Example usage to update user role
   const handleUpdateUserRole = async (userId, newRole) => {
     try {
-      // Perform role update request
       await updateUserRole(userId, newRole);
     } catch (error) {
       console.error("Failed to update user role:", error.message);

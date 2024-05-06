@@ -6,11 +6,13 @@ import UsersList from "./UsersList";
 import LeftNavigation from "./LeftNavigation";
 import MainHeader from "../MainHeader";
 import PlacesList from "./PlacesList";
+import AdminBookings from "./AdminBookings";
 
 export default function AdminDashboard() {
   const userRole = useSelector((state) => state.user.role);
   const [isUserDashboard, setIsUserDashboard] = useState(true);
   const [isAddPlaces, setIsAddPlaces] = useState(false);
+  const [isBooking, setIsBooking] = useState(false);
 
   return (
     <>
@@ -22,6 +24,7 @@ export default function AdminDashboard() {
             onClick={() => {
               setIsUserDashboard(true);
               setIsAddPlaces(false);
+              setIsBooking(false);
             }}
           >
             User Dashboard
@@ -31,13 +34,25 @@ export default function AdminDashboard() {
             onClick={() => {
               setIsAddPlaces(true);
               setIsUserDashboard(false);
+              setIsBooking(false);
             }}
           >
             Add places
           </span>
+          <span
+            className={`cursor ${isBooking ? "active" : ""}`}
+            onClick={() => {
+              setIsBooking(true);
+              setIsAddPlaces(false);
+              setIsUserDashboard(false);
+            }}
+          >
+            Bookings
+          </span>
         </div>
         {isUserDashboard && <UsersList />}
         {isAddPlaces && <PlacesList />}
+        {isBooking && <AdminBookings />}
       </div>
     </>
   );

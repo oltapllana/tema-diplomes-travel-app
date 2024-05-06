@@ -102,6 +102,7 @@ app.post("/login", async (req, res) => {
       role: user.role,
       username: user.username,
       token,
+      id: user._id,
     });
   } catch (error) {
     console.error("Error logging in:", error);
@@ -337,11 +338,11 @@ app.post("/places/:placesId", upload.array("images"), async (req, res) => {
 
 app.post("/travel-plan", async (req, res) => {
   try {
-    const { cityId, city, placePlan } = req.body;
+    const { userId, cityId, city, placePlan } = req.body;
 
     const existingPlan = await database
       .collection("travelplans")
-      .findOne({ cityId });
+      .findOne({ cityId, userId });
 
     if (existingPlan) {
       if (
@@ -349,22 +350,25 @@ app.post("/travel-plan", async (req, res) => {
           (existingPlace) => existingPlace.id === placePlan.id
         )
       ) {
-        return res
-          .status(409)
-          .json({ error: "Duplicate placePlan IDs found in the database" });
+        return res.status(409).json({
+          error: "Duplicate placePlan ID found for this user in the database",
+        });
       }
 
       await database
         .collection("travelplans")
-        .updateOne({ city }, { $push: { placePlan: { $each: [placePlan] } } });
+        .updateOne(
+          { cityId, userId },
+          { $push: { placePlan: { $each: [placePlan] } } }
+        );
 
       return res.status(200).json({
-        message: "Place plans added to existing travel plan successfully",
+        message: "Place plan added to existing travel plan successfully",
       });
     } else {
       await database
         .collection("travelplans")
-        .insertOne({ cityId, city, placePlan: [placePlan] });
+        .insertOne({ userId, cityId, city, placePlan: [placePlan] });
 
       return res
         .status(201)
@@ -376,11 +380,12 @@ app.post("/travel-plan", async (req, res) => {
   }
 });
 
-app.get("/travel-plans", async (req, res) => {
+app.get("/user/:userId/travel-plans", async (req, res) => {
   try {
+    const userId = req.params.userId;
     const travelPlans = await database
       .collection("travelplans")
-      .find({})
+      .find({ userId })
       .toArray();
 
     return res.status(200).json(travelPlans);
@@ -389,29 +394,36 @@ app.get("/travel-plans", async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 });
-app.delete("/travel-plans/:id/:planId", async (req, res) => {
+
+app.delete("/user/:userId/travel-plans/:id/:planId", async (req, res) => {
   try {
+    const userId = req.params.userId;
     const travelPlanId = req.params.id;
     const placePlanId = req.params.planId;
 
     const travelPlan = await database
       .collection("travelplans")
-      .findOne({ _id: ObjectId(travelPlanId) });
+      .findOne({ _id: ObjectId(travelPlanId), userId: userId });
+
     if (!travelPlan) {
       return res.status(404).json({ error: "Travel plan not found" });
     }
 
-    if (travelPlan.placePlan.length === 1) {
+    const updatedTravelPlan = travelPlan.placePlan.filter(
+      (plan) => plan.id !== placePlanId
+    );
+
+    await database
+      .collection("travelplans")
+      .updateOne(
+        { _id: ObjectId(travelPlanId), userId: userId },
+        { $set: { placePlan: updatedTravelPlan } }
+      );
+
+    if (updatedTravelPlan.length === 0) {
       await database
         .collection("travelplans")
-        .deleteOne({ _id: new ObjectId(travelPlanId) });
-    } else {
-      await database
-        .collection("travelplans")
-        .updateOne(
-          { _id: new ObjectId(travelPlanId) },
-          { $pull: { placePlan: { id: placePlanId } } }
-        );
+        .deleteOne({ _id: ObjectId(travelPlanId), userId: userId });
     }
 
     return res.status(200).json({ message: "Place deleted successfully" });
@@ -466,10 +478,22 @@ app.get("/availability/:cityId/:thingId", async (req, res) => {
   }
 });
 
-app.post("/book/:thingId", async (req, res) => {
+app.post("/user/:userId/book/:thingId", async (req, res) => {
   try {
+    const userId = req.params.userId;
     const thingId = req.params.thingId;
-    const { numTickets, startDate, hour } = req.body;
+    const { numTickets, selectedDate, selectedHour, bookedPlace } = req.body;
+
+    const existingBooking = await database
+      .collection("bookings")
+      .findOne({ userId, thingId });
+    if (existingBooking) {
+      return res.status(409).json({
+        error:
+          "You have booked this one, please go to Booking tab and edit number of tickets",
+      });
+    }
+
     const availability = await database
       .collection("availability")
       .findOne({ thingId });
@@ -487,13 +511,61 @@ app.post("/book/:thingId", async (req, res) => {
 
     const cityId = availability.cityId;
 
-    await database
-      .collection("bookings")
-      .insertOne({ thingId, numTickets, startDate, hour, cityId });
+    await database.collection("bookings").insertOne({
+      userId,
+      numTickets,
+      selectedDate,
+      selectedHour,
+      bookedPlace,
+    });
 
     res.json({ message: "Tickets booked successfully" });
   } catch (error) {
     console.error("Error booking tickets:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/user/:userId/bookings", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const bookings = await database
+      .collection("bookings")
+      .find({ userId })
+      .toArray();
+
+    res.json(bookings);
+  } catch (error) {
+    console.error("Error fetching bookings:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/bookings", async (req, res) => {
+  try {
+    const bookings = await database.collection("bookings").find().toArray();
+
+    res.json(bookings);
+  } catch (error) {
+    console.error("Error fetching bookings:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/user/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await database
+      .collection("users")
+      .findOne({ _id: ObjectId(userId) });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error("Error fetching user details:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });

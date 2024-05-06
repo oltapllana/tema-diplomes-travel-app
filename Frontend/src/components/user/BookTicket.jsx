@@ -17,33 +17,37 @@ const BookTicket = (props) => {
     e.preventDefault();
 
     const response = await fetch(
-      `http://localhost:3000/book/${props.placeId}`,
+      `http://localhost:3000/user/${localStorage.getItem("id")}/book/${
+        props.item?.id
+      }`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userId: localStorage.getItem("id"),
           numTickets,
           selectedDate,
           selectedHour,
+          bookedPlace: props.item,
         }),
       }
     );
 
     if (response.ok) {
-      console.log("Tickets booked successfully");
+      props.setOpenAvailabilityModal(false);
     }
   };
 
   const handleIncrement = () => setNumTickets((prevState) => prevState + 1);
   const handleDecrement = () => setNumTickets((prevState) => prevState - 1);
-
+  console.log(selectedDate);
   return (
     <Modal
       isDisplay={props.openAvailabilityModal}
       setIsDisplay={props.setOpenAvailabilityModal}
-      title={`Available ticket for: ${props.placeTicket}`}
+      title={`Available ticket for: ${props.item?.place}`}
     >
       <form className="book-ticket-form" onSubmit={handleBooking}>
         <span>Tickets left: {props.tickets}</span>

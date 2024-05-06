@@ -95,6 +95,11 @@
   top: 65px;
 }
 
+.grid-3-1 {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
 .btn {
   padding: 7px;
   border: none;

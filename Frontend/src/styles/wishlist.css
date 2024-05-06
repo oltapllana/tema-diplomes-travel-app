@@ -1,16 +1,20 @@
-.wishlist-item-wrapper {
+.wishlist-item-wrapper,
+.booking-wrapper {
   position: relative;
   top: 70px;
 }
-.wishlist-item-wrapper .wishlist-item {
+.wishlist-item-wrapper .wishlist-item,
+.booking-wrapper .wishlist-item {
   border: 1px solid #dcdfe4;
   border-radius: 10px;
   padding: 16px;
 }
-.wishlist-item-wrapper .wishlist-item h1 {
+.wishlist-item-wrapper .wishlist-item h1,
+.booking-wrapper .wishlist-item h1 {
   margin: 0;
 }
-.wishlist-item-wrapper img {
+.wishlist-item-wrapper img,
+.booking-wrapper img {
   width: 200px;
   height: auto;
 }/*# sourceMappingURL=wishlist.css.map */

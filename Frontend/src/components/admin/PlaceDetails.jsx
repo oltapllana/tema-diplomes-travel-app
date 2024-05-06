@@ -25,6 +25,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
       body: JSON.stringify({
         cityId: place._id,
         city: place.city,
+        userId: localStorage.getItem("id"),
         placePlan: {
           id: thing.id,
           text: thing.text,

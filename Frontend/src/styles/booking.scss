@@ -33,3 +33,41 @@
     }
   }
 }
+
+.booking-details {
+  margin-top: 5px;
+  > p {
+    margin-top: 8px;
+    > span {
+      margin-left: 3px;
+    }
+  }
+}
+
+.total-price-wrapper {
+  margin-top: 70px;
+  margin-left: 10px;
+  border: 1px solid #dcdfe4;
+  border-radius: 10px;
+  padding: 16px;
+
+  .no-credit-card {
+    margin-top: 10px;
+    border: 1px solid rgb(105, 194, 105);
+    color: rgb(105, 194, 105);
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+  }
+}
+
+.booking-place-wrapper {
+  justify-content: center;
+  align-items: center;
+  img {
+    margin-right: 5px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+}

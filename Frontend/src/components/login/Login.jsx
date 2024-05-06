@@ -31,6 +31,7 @@ export default function Login() {
     localStorage.setItem("role", response.role);
     localStorage.setItem("authToken", response.token);
     localStorage.setItem("username", response.username);
+    localStorage.setItem("id", response.id);
 
     if (response.role === "user") {
       navigate("/");

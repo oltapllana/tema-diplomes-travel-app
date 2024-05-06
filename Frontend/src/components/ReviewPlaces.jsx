@@ -18,10 +18,8 @@ export default function ReviewPlaces({ placeId }) {
       );
 
       if (response.ok) {
-        // Rating submitted successfully
         console.log("Rating submitted successfully");
       } else {
-        // Handle error response
         console.error("Failed to submit rating:", response.statusText);
       }
     } catch (error) {

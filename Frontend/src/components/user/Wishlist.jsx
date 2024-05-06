@@ -9,10 +9,13 @@ const Wishlist = () => {
   const [openAvailabilityModal, setOpenAvailabilityModal] = useState(false);
   const [placeTicket, setPlaceTicket] = useState(null);
   const [placeId, setPlaceId] = useState(null);
+  const [placeDetails, setPlaceDetails] = useState({});
 
   const fetchTravelPlans = async () => {
     try {
-      const response = await fetch("http://localhost:3000/travel-plans");
+      const response = await fetch(
+        `http://localhost:3000/user/${localStorage.getItem("id")}/travel-plans`
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch travel plans");
       }
@@ -25,7 +28,9 @@ const Wishlist = () => {
 
   const handleDelete = async ({ planId, placeId }) => {
     const response = await fetch(
-      `http://localhost:3000/travel-plans/${planId}/${placeId}`,
+      `http://localhost:3000/user/${localStorage.getItem(
+        "id"
+      )}/travel-plans/${planId}/${placeId}`,
       {
         method: "DELETE",
       }
@@ -47,8 +52,6 @@ const Wishlist = () => {
     const availability = await getAvailability();
     setTickets(availability.ticketsLeft);
   };
-
-  console.log("-----------------------------------", tickets);
 
   useEffect(() => {
     fetchTravelPlans();
@@ -93,9 +96,10 @@ const Wishlist = () => {
                       </button>
                       <button
                         onClick={() => {
-                          setPlaceTicket(place.place);
                           checkAvailability(plan.cityId, place.id);
-                          setPlaceId(place.id)
+                          setPlaceTicket(place.place);
+                          setPlaceId(place.id);
+                          setPlaceDetails(place);
                         }}
                         className="btn pink-btn"
                       >
@@ -113,9 +117,8 @@ const Wishlist = () => {
         <BookTicket
           openAvailabilityModal={openAvailabilityModal}
           setOpenAvailabilityModal={setOpenAvailabilityModal}
+          item={placeDetails}
           tickets={tickets}
-          placeTicket={placeTicket}
-          placeId={placeId}
         />
       )}
     </>
