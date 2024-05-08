@@ -67,7 +67,6 @@ const Wishlist = () => {
             <div className="wishlist-item-wrapper">
               <h2>{plan.city.toUpperCase()}</h2>
               {plan.placePlan.map((place) => {
-                console.log(place);
                 return (
                   <div className="wishlist-item margin-bottom-20">
                     <h1>{place.place}</h1>

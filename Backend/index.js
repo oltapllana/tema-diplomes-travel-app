@@ -291,11 +291,14 @@ app.post("/places", upload.single("image"), async (req, res) => {
       description,
       image: filename,
       city,
+      thingstodo: [],
     };
 
     await database.collection("travelappcollection").insertOne(newPlace);
 
-    return res.status(201).json({ message: "Place added successfully" });
+    return res
+      .status(201)
+      .json({ message: "Place added successfully", placesId });
   } catch (error) {
     console.error("Error adding place:", error);
     return res.status(500).json({ error: "Internal server error" });
@@ -307,7 +310,7 @@ app.post("/places/:placesId", upload.array("images"), async (req, res) => {
     const placesId = parseInt(req.params.placesId);
     const texts = req.body.texts;
     const places = req.body.places;
-    const prices = req.body.price;
+    const prices = req.body.prices;
     const images = req.files.map((file) => file.filename);
 
     await database.collection("travelappcollection").updateOne(

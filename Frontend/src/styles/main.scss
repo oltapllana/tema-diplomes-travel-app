@@ -8,6 +8,11 @@
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
 .flex {
   display: flex;
 }
@@ -100,6 +105,10 @@
   grid-template-columns: 3fr 1fr;
 }
 
+.red-error {
+  color: red;
+}
+
 .btn {
   padding: 7px;
   border: none;
@@ -113,5 +122,9 @@
     background-color: white;
     border: 1px solid #fe1d60;
     color: #fe1d60;
+  }
+  &.blue-btn {
+    background-color: #4a85f6;
+    color: white;
   }
 }

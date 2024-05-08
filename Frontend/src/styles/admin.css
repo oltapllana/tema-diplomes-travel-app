@@ -119,6 +119,9 @@
 .add-place-wrapper > form {
   display: flex;
   flex-direction: column;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
 }
 .add-place-wrapper > form > div > div > input:not(.aa),
 .add-place-wrapper > form > input {

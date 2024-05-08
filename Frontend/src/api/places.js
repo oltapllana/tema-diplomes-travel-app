@@ -7,24 +7,6 @@ export const getPlaces = async () => {
   }
 };
 
-export const addNewPlace = async (formData) => {
-  try {
-    const response = await fetch("http://localhost:3000/places", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to add new place");
-    }
-
-    const data = await response.json();
-    console.log("New place added successfully:");
-  } catch (error) {
-    console.error("Error adding new place:", error.message);
-  }
-};
-
 export const getCountryData = async (countryName) => {
   try {
     const response = await fetch(

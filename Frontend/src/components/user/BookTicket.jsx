@@ -3,7 +3,6 @@ import Modal from "./../Modal";
 import CustomDateRange from "./../CustomDateRange";
 
 const BookTicket = (props) => {
-  console.log("props", props);
   const [numTickets, setNumTickets] = useState(0);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedHour, setSelectedHour] = useState("");

@@ -7,12 +7,17 @@ import LeftNavigation from "./LeftNavigation";
 import MainHeader from "../MainHeader";
 import PlacesList from "./PlacesList";
 import AdminBookings from "./AdminBookings";
+import AddPlaces from "./AddPlaces";
+import AddPlacesDetails from "./AddPlacesDetails";
 
 export default function AdminDashboard() {
   const userRole = useSelector((state) => state.user.role);
   const [isUserDashboard, setIsUserDashboard] = useState(true);
-  const [isAddPlaces, setIsAddPlaces] = useState(false);
+  const [isPlacesList, setIsPlacesList] = useState(false);
+  const [isAddNewPlaces, setIsAddNewPlaces] = useState(false);
   const [isBooking, setIsBooking] = useState(false);
+  const [place, setPlace] = useState(null);
+  const [showAddPlacesDetails, setShowAddPlacesDetails] = useState(false);
 
   return (
     <>
@@ -23,27 +28,45 @@ export default function AdminDashboard() {
             className={`cursor ${isUserDashboard ? "active" : ""}`}
             onClick={() => {
               setIsUserDashboard(true);
-              setIsAddPlaces(false);
+              setShowAddPlacesDetails(false);
+              setIsAddNewPlaces(false);
+              setIsPlacesList(false);
               setIsBooking(false);
             }}
           >
             User Dashboard
           </span>
           <span
-            className={`cursor ${isAddPlaces ? "active" : ""}`}
+            className={`cursor ${isPlacesList ? "active" : ""}`}
             onClick={() => {
-              setIsAddPlaces(true);
+              setIsPlacesList(true);
+              setShowAddPlacesDetails(false);
+              setIsAddNewPlaces(false);
               setIsUserDashboard(false);
               setIsBooking(false);
             }}
           >
-            Add places
+            Places list
+          </span>
+          <span
+            className={`cursor ${isAddNewPlaces ? "active" : ""}`}
+            onClick={() => {
+              setIsAddNewPlaces(true);
+              setShowAddPlacesDetails(false);
+              setIsBooking(false);
+              setIsPlacesList(false);
+              setIsUserDashboard(false);
+            }}
+          >
+            Add new place
           </span>
           <span
             className={`cursor ${isBooking ? "active" : ""}`}
             onClick={() => {
               setIsBooking(true);
-              setIsAddPlaces(false);
+              setShowAddPlacesDetails(false);
+              setIsAddNewPlaces(false);
+              setIsPlacesList(false);
               setIsUserDashboard(false);
             }}
           >
@@ -51,8 +74,18 @@ export default function AdminDashboard() {
           </span>
         </div>
         {isUserDashboard && <UsersList />}
-        {isAddPlaces && <PlacesList />}
+        {isPlacesList && <PlacesList />}
         {isBooking && <AdminBookings />}
+        {isAddNewPlaces && (
+          <div className="user-dashboard">
+            <AddPlaces
+              place={place}
+              setPlace={setPlace}
+              setShowAddPlacesDetails={setShowAddPlacesDetails}
+            />
+            {showAddPlacesDetails && <AddPlacesDetails place={place} />}
+          </div>
+        )}
       </div>
     </>
   );
