@@ -307,7 +307,7 @@ app.post("/places/:placesId", upload.array("images"), async (req, res) => {
     const placesId = parseInt(req.params.placesId);
     const texts = req.body.texts;
     const places = req.body.places;
-    const prices = req.body.prices;
+    const prices = req.body.price;
     const images = req.files.map((file) => file.filename);
 
     await database.collection("travelappcollection").updateOne(
@@ -567,5 +567,46 @@ app.get("/user/:userId", async (req, res) => {
   } catch (error) {
     console.error("Error fetching user details:", error);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.delete("/user/:userId/bookings/:bookingId", async (req, res) => {
+  try {
+    const { userId, bookingId } = req.params;
+    const booking = await database
+      .collection("bookings")
+      .deleteOne({ _id: ObjectId(bookingId), userId });
+
+    if (!booking === 0) {
+      return res.status(404).json({ message: "Booking not found." });
+    }
+
+    return res.status(200).json({ message: "Booking canceled successfully." });
+  } catch (error) {
+    console.error("Error canceling booking:", error);
+    return res.status(500).json({ message: "Internal Server Error." });
+  }
+});
+
+app.put("/user/:userId/bookings/:bookingId", async (req, res) => {
+  try {
+    const { bookingId } = req.params;
+    const { selectedHour, selectedDate, numTickets } = req.body;
+
+    const booking = await database
+      .collection("bookings")
+      .updateOne(
+        { _id: ObjectId(bookingId) },
+        { $set: { selectedHour, selectedDate, numTickets } }
+      );
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found." });
+    }
+
+    return res.status(200).json({ message: "Booking updated successfully." });
+  } catch (error) {
+    console.error("Error updating booking:", error);
+    return res.status(500).json({ message: "Internal Server Error." });
   }
 });

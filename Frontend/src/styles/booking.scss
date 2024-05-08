@@ -71,3 +71,26 @@
     border-radius: 50%;
   }
 }
+
+.booking-footer{
+  margin-top: 20px;
+.booking-btns-wrapper {
+  gap: 6px;
+  .booking-btn {
+    border: none;
+    background-color: #ebeef1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+
+    &.booking-edit-btn {
+      padding: 10px 14px;
+      gap: 5px;
+    }
+    &.booking-delete-btn {
+      padding: 12px;
+    }
+  }
+}
+}

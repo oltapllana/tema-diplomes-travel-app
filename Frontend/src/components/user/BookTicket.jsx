@@ -3,6 +3,7 @@ import Modal from "./../Modal";
 import CustomDateRange from "./../CustomDateRange";
 
 const BookTicket = (props) => {
+  console.log("props", props);
   const [numTickets, setNumTickets] = useState(0);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedHour, setSelectedHour] = useState("");
@@ -42,7 +43,7 @@ const BookTicket = (props) => {
 
   const handleIncrement = () => setNumTickets((prevState) => prevState + 1);
   const handleDecrement = () => setNumTickets((prevState) => prevState - 1);
-  console.log(selectedDate);
+
   return (
     <Modal
       isDisplay={props.openAvailabilityModal}

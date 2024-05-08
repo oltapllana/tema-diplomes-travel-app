@@ -65,4 +65,26 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
+}
+
+.booking-footer {
+  margin-top: 20px;
+}
+.booking-footer .booking-btns-wrapper {
+  gap: 6px;
+}
+.booking-footer .booking-btns-wrapper .booking-btn {
+  border: none;
+  background-color: #ebeef1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+}
+.booking-footer .booking-btns-wrapper .booking-btn.booking-edit-btn {
+  padding: 10px 14px;
+  gap: 5px;
+}
+.booking-footer .booking-btns-wrapper .booking-btn.booking-delete-btn {
+  padding: 12px;
 }/*# sourceMappingURL=booking.css.map */

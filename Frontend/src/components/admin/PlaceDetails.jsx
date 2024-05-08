@@ -15,6 +15,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
   const [tickets, setTickets] = useState(0);
   const [placeId, setPlaceId] = useState(null);
   const [placeTicket, setPlaceTicket] = useState(null);
+  const [placeDetails, setPlaceDetails] = useState({});
 
   const addToWishlist = async (thing) => {
     const response = await fetch("http://localhost:3000/travel-plan", {
@@ -31,7 +32,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
           text: thing.text,
           image: thing.image,
           place: thing.place,
-          price: thing.prices,
+          price: thing.price,
         },
       }),
     });
@@ -114,7 +115,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
                   )}
 
                   <div className="flex flex-end">
-                    <span>{thing.prices}</span>
+                    <span>{thing.price}</span>
                   </div>
                   {role === "user" && (
                     <button
@@ -124,6 +125,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
                         setPlaceId(thing.id);
                         setOpenAvailabilityModal(true);
                         checkAvailability(thing.id);
+                        setPlaceDetails(thing);
                       }}
                     >
                       Book now
@@ -148,8 +150,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
           openAvailabilityModal={openAvailabilityModal}
           setOpenAvailabilityModal={setOpenAvailabilityModal}
           tickets={tickets}
-          placeTicket={placeTicket}
-          placeId={placeId}
+          item={placeDetails}
         />
       )}
       {error && (
