@@ -134,7 +134,7 @@ const Bookings = () => {
                 <div className="flex column-direction full-width">
                   <p>{booking.bookedPlace.text}</p>
                   <div className="flex column-direction booking-details">
-                    <p className="flex">
+                    <p className="flex align-center gap-5">
                       <Clock />{" "}
                       {editedBookingId === booking._id ? (
                         <>
@@ -156,7 +156,7 @@ const Bookings = () => {
                         </span>
                       )}
                     </p>
-                    <p className="flex">
+                    <p className="flex align-center gap-5">
                       <Ticket />{" "}
                       {editedBookingId === booking._id ? (
                         <input

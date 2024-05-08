@@ -53,6 +53,7 @@ const AdminBookings = () => {
         <div className="flex users-list user-title">
           <span>User</span>
           <span>Place</span>
+          <span>Date/Time</span>
           <span>Tickets</span>
           <span>Price</span>
           <span>Total Price</span>
@@ -68,6 +69,9 @@ const AdminBookings = () => {
               />
               <span>{booking.bookedPlace.place}</span>
             </div>
+            <span>
+              {booking.selectedDate} ~ {booking.selectedHour}
+            </span>
             <span>{booking.numTickets}</span>
             <span>{booking.bookedPlace.price}</span>
             <span>
