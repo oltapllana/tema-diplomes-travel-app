@@ -56,18 +56,19 @@ const AdminBookings = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/bookings/${bookingId}`,
+        `http://localhost:3000/users/${localStorage.getItem(
+          "id"
+        )}/bookings/${bookingId}`,
         {
           method: "DELETE",
         }
       );
+      console.log("aaaaaaaaaaaaa-------------", response);
 
       if (response.ok) {
         setBookings((prevBookings) =>
           prevBookings.filter((booking) => booking._id !== bookingId)
         );
-        // alert("Booking terminated successfully");
-
         if (socket) {
           socket.emit("terminateBooking", userId, bookingId);
         }
@@ -123,7 +124,7 @@ const AdminBookings = () => {
                 handleTerminateBooking(booking._id, booking.userId)
               }
             >
-              Terminate
+              Cancle
             </button>
           </div>
         ))}

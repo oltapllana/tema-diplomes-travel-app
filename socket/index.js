@@ -1,25 +1,31 @@
 const { Server } = require("socket.io");
 
 const io = new Server({ cors: { origin: "http://localhost:3001" } });
-let onlineUser = [];
-io.on("connection", (socket) => {
-  console.log("new connection", socket.id);
+let users = {};
 
-  //listen to a connection
-  socket.on("addNewUser", (userId) => {
-    onlineUser.push({
-      userId,
-      socketId: socket.id,
-    });
-    console.log(onlineUser);
+io.on("connection", (socket) => {
+  socket.on("user", (userId) => {
+    users[userId] = socket.id;
   });
 
   socket.on("terminateBooking", (userId, bookingId) => {
     console.log({ userId, bookingId });
 
-    const user = onlineUser.find((user) => user.userId === userId);
-    if (user) {
-      io.to(user.socketId).emit("bookingTerminated", { userId, bookingId });
+    const targetSocketId = users[userId];
+    if (targetSocketId) {
+      io.to(targetSocketId).emit("bookingTerminated", { userId, bookingId });
+    } else {
+      console.log(`User with ID: ${userId} not connected.`);
+    }
+  });
+
+  socket.on("disconnect", () => {
+    for (let userId in users) {
+      if (users[userId] === socket.id) {
+        delete users[userId];
+        console.log(`User with ID: ${userId} disconnected`);
+        break;
+      }
     }
   });
 });

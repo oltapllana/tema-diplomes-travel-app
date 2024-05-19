@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import DownArrow from "../assets/DownArrow";
 import { io } from "socket.io-client";
 import { useSocket } from "../SocketsContext";
-
-// const socket = io("http://localhost:3005");
+import Notification from "../assets/Notification";
+import Notifications from "./Notifications";
 
 export default function MainHeader(props) {
   const navigate = useNavigate();
@@ -15,25 +15,8 @@ export default function MainHeader(props) {
   const [profile, setProfile] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const socket = useSocket();
-
-  useEffect(() => {
-    if (socket === null) {
-      return;
-    }
-    socket.on("addNewUser", profile?.id);
-    socket.on("bookingTerminated", (data) => {
-      setNotifications((prev) => [
-        ...prev,
-        `Booking ${data.bookingId} has been terminated`,
-      ]);
-    });
-
-    return () => {
-      socket.off("bookingTerminated");
-      socket.off("addNewUser");
-    };
-  }, [socket, profile]);
 
   useEffect(() => {
     const fetchhh = async (username) => {
@@ -70,6 +53,30 @@ export default function MainHeader(props) {
     }
   };
 
+  const fetchNotifications = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/notifications/${localStorage.getItem("id")}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch notifications");
+      }
+
+      const notifications = await response.json();
+      setNotifications(notifications);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
+
   return (
     <header className="travel-header">
       {profile?.role === "user" && (
@@ -86,7 +93,16 @@ export default function MainHeader(props) {
           <li>
             <span onClick={() => navigate("/bookings")}>Bookings</span>
           </li>
-          <li>Food</li>
+          <li>
+            <div
+              onClick={() => {
+                setIsNotificationOpen((prevState) => !prevState);
+                fetchNotifications();
+              }}
+            >
+              <Notification />
+            </div>
+          </li>
           <li>
             {!isLoggedin && (
               <button
@@ -140,6 +156,7 @@ export default function MainHeader(props) {
           )}
         </>
       )}
+      {isNotificationOpen && <Notifications notifications={notifications} />}
     </header>
   );
 }

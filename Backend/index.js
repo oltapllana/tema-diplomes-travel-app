@@ -615,17 +615,33 @@ app.put("/user/:userId/bookings/:bookingId", async (req, res) => {
   }
 });
 
-app.delete("/bookings/:id", async (req, res) => {
-  const bookingId = req.params.id;
-
+app.delete("/users/:userId/bookings/:id", async (req, res) => {
   try {
+    const bookingId = req.params.id;
+    const userId = req.params.userId;
     const booking = await database
       .collection("bookings")
       .findOne({ _id: new ObjectId(bookingId) });
 
+    const user = await database
+      .collection("users")
+      .findOne({ _id: new ObjectId(userId) });
     if (!booking) {
       return res.status(404).send({ message: "Booking not found" });
     }
+    const notification = {
+      userId: booking.userId,
+      bookingId: bookingId,
+      message: "cancelled",
+      date: new Date(),
+      bookingDetails: {
+        image: booking.bookedPlace.image,
+        place: booking.bookedPlace.place,
+      },
+      admin: user.username,
+    };
+
+    await database.collection("notifications").insertOne(notification);
 
     await database
       .collection("bookings")
@@ -634,5 +650,21 @@ app.delete("/bookings/:id", async (req, res) => {
     res.status(200).send({ message: "Booking deleted successfully" });
   } catch (error) {
     res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
+app.get("/notifications/:userId", async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const notifications = await database
+      .collection("notifications")
+      .find({ userId })
+      .toArray();
+
+    return res.status(200).json(notifications);
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 });

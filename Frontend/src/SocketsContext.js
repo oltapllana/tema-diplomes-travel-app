@@ -16,11 +16,6 @@ export const SocketProvider = ({ children }) => {
     const newSocket = io("http://localhost:3005");
     setSocket(newSocket);
 
-    const userId = localStorage.getItem("id");
-    if (userId) {
-      newSocket.emit("addNewUser", userId);
-    }
-
     return () => {
       newSocket.disconnect();
     };

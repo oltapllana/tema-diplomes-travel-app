@@ -6,6 +6,7 @@ import Price from "../../assets/user/Price";
 import Edit from "../../assets/user/Edit";
 import Delete from "../../assets/user/Delete";
 import { io } from "socket.io-client";
+import { useSocket } from "../../SocketsContext";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -14,16 +15,24 @@ const Bookings = () => {
   const [editedDate, setEditedDate] = useState(null);
   const [editedNumTickets, setEditedNumTickets] = useState(null);
   const [editedBookingId, setEditedBookingId] = useState(null);
-  const [socket, setSocket] = useState(null);
+  const socket = useSocket();
 
   useEffect(() => {
-    const newSocket = io("http://localhost:3005");
-    setSocket(newSocket);
+    if (socket === null) {
+      return;
+    }
+    socket.emit("user", localStorage.getItem("id"));
+    socket.on("bookingTerminated", (data) => {
+      console.log("a data", data);
+      fetchData();
+    });
 
     return () => {
-      newSocket.disconnect();
+      socket.off("bookingTerminated", (data) => {
+        fetchData();
+      });
     };
-  }, []);
+  }, [socket]);
 
   const calculateTotalPrice = (data) => {
     let totalPrice = 0;
@@ -39,6 +48,7 @@ const Bookings = () => {
       const response = await fetch(
         `http://localhost:3000/user/${localStorage.getItem("id")}/bookings`
       );
+
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
