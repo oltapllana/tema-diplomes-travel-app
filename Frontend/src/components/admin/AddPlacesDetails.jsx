@@ -3,7 +3,7 @@ import Plus from "../../assets/admin/Plus";
 import Minus from "../../assets/admin/Minus";
 import Modal from "../Modal";
 
-const AddPlacesDetails = ({ place }) => {
+const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
   const [thingsToDo, setThingsToDo] = useState([
     { text: "", place: "", image: null, price: "" },
   ]);
@@ -106,9 +106,10 @@ const AddPlacesDetails = ({ place }) => {
             </div>
           ))}
           <button
-            onClick={(event) =>
-              addTextAndImages(event, place.placesId, thingsToDo)
-            }
+            onClick={(event) => {
+              addTextAndImages(event, place.placesId, thingsToDo);
+              setIsAddPlacesDetailsOpen(false);
+            }}
             className="btn blue-btn"
             type="submit"
           >

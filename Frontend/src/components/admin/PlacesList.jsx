@@ -3,7 +3,7 @@ import { getPlaces } from "../../api/places";
 import AddPlaces from "./AddPlaces";
 import AddPlacesDetails from "./AddPlacesDetails";
 import PlaceDetails from "./PlaceDetails";
-import Modal from './../Modal';
+import Modal from "./../Modal";
 
 const PlacesList = () => {
   const [places, setPlaces] = useState([]);
@@ -90,7 +90,7 @@ const PlacesList = () => {
         <PlaceDetails place={place} setShowPlaceDetails={setShowPlaceDetails} />
       )}
       {isAddPlacesDetailsOpen && (
-        <Modal title="Things to do">
+        <Modal title="Things to do" setIsDisplay={setIsAddPlacesDetailsOpen}>
           <AddPlacesDetails
             setIsAddPlacesDetailsOpen={setIsAddPlacesDetailsOpen}
             place={place}
