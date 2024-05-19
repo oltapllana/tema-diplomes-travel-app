@@ -16,6 +16,7 @@ export default function MainHeader(props) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const socket = useSocket();
 
   useEffect(() => {
@@ -55,6 +56,7 @@ export default function MainHeader(props) {
 
   const fetchNotifications = async () => {
     try {
+      setIsLoading(true);
       const response = await fetch(
         `http://localhost:3000/notifications/${localStorage.getItem("id")}`,
         {
@@ -68,10 +70,12 @@ export default function MainHeader(props) {
 
       if (!response.ok) {
         throw new Error("Failed to fetch notifications");
+        setIsLoading(false);
       }
 
       const notifications = await response.json();
       setNotifications(notifications);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
@@ -156,7 +160,7 @@ export default function MainHeader(props) {
           )}
         </>
       )}
-      {isNotificationOpen && <Notifications notifications={notifications} />}
+      {isNotificationOpen && <Notifications notifications={notifications} isLoading={isLoading} />}
     </header>
   );
 }

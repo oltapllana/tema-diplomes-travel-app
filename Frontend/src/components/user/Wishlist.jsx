@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import MainHeader from "./../MainHeader";
 import Modal from "./../Modal";
 import BookTicket from "./BookTicket";
+import Empty from "../Empty";
 
 const Wishlist = () => {
   const [travelPlans, setTravelPlans] = useState([]);
@@ -10,17 +11,21 @@ const Wishlist = () => {
   const [placeTicket, setPlaceTicket] = useState(null);
   const [placeId, setPlaceId] = useState(null);
   const [placeDetails, setPlaceDetails] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchTravelPlans = async () => {
     try {
+      setIsLoading(true);
       const response = await fetch(
         `http://localhost:3000/user/${localStorage.getItem("id")}/travel-plans`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch travel plans");
+        setIsLoading(false);
       }
       const data = await response.json();
       setTravelPlans(data);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching travel plans:", error);
     }
@@ -111,6 +116,7 @@ const Wishlist = () => {
             </div>
           );
         })}
+        {!isLoading && travelPlans.length === 0 && <Empty />}
       </div>
       {openAvailabilityModal && (
         <BookTicket

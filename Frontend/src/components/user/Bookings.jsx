@@ -7,6 +7,7 @@ import Edit from "../../assets/user/Edit";
 import Delete from "../../assets/user/Delete";
 import { io } from "socket.io-client";
 import { useSocket } from "../../SocketsContext";
+import Empty from "../Empty";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -15,6 +16,7 @@ const Bookings = () => {
   const [editedDate, setEditedDate] = useState(null);
   const [editedNumTickets, setEditedNumTickets] = useState(null);
   const [editedBookingId, setEditedBookingId] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const socket = useSocket();
 
   useEffect(() => {
@@ -23,7 +25,6 @@ const Bookings = () => {
     }
     socket.emit("user", localStorage.getItem("id"));
     socket.on("bookingTerminated", (data) => {
-      console.log("a data", data);
       fetchData();
     });
 
@@ -45,16 +46,19 @@ const Bookings = () => {
 
   const fetchData = async () => {
     try {
+      setIsLoading(true);
       const response = await fetch(
         `http://localhost:3000/user/${localStorage.getItem("id")}/bookings`
       );
 
       if (!response.ok) {
         throw new Error("Failed to fetch data");
+        setIsLoading(false);
       }
       const data = await response.json();
       setBookings(data);
       calculateTotalPrice(data);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -242,6 +246,7 @@ const Bookings = () => {
               </div>
             </div>
           ))}
+          {!isLoading && bookings.length === 0 && <Empty />}
         </div>
         <div className="total-price-wrapper">
           Total price of your booking is: {totalPrice}$

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { parseISO, format } from "date-fns";
+import Empty from "./Empty";
 
-const Notifications = ({ notifications }) => {
+const Notifications = ({ notifications, isLoading }) => {
   return (
     <div className="notifications-wrapper">
       {notifications.map((notification) => (
@@ -20,6 +21,7 @@ const Notifications = ({ notifications }) => {
           </div>
         </div>
       ))}
+      {!isLoading && notifications.length === 0 && <Empty />}
     </div>
   );
 };

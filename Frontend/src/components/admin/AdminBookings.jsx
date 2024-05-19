@@ -120,6 +120,7 @@ const AdminBookings = () => {
               $
             </span>
             <button
+              className="btn blue-btn"
               onClick={() =>
                 handleTerminateBooking(booking._id, booking.userId)
               }
