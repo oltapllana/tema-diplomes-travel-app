@@ -124,7 +124,7 @@ const AdminBookings = () => {
                 handleTerminateBooking(booking._id, booking.userId)
               }
             >
-              Cancle
+              Cancel
             </button>
           </div>
         ))}

@@ -9,16 +9,21 @@
   background-color: white;
   padding: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+
   .notification-item {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
     gap: 3px;
     padding: 2px;
+
     .details {
       display: flex;
       flex-direction: column;
       width: 100%;
+
       span.date {
         display: flex;
         justify-content: end;
@@ -27,11 +32,13 @@
         margin-top: 2px;
       }
     }
+
     &:hover {
       cursor: pointer;
       background-color: rgb(221, 216, 216);
     }
   }
+
   img {
     width: 70px;
     height: auto;
