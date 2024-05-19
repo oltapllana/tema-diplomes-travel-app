@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { io } from "socket.io-client";
+import { useSocket } from "../../SocketsContext";
 
 const AdminBookings = () => {
+  const socket = useSocket();
   const [bookings, setBookings] = useState([]);
   const [users, setUsers] = useState({});
+  const [details, setDetails] = useState({ userId: "", bookingId: "" });
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -44,6 +48,37 @@ const AdminBookings = () => {
     return userData;
   };
 
+  const handleTerminateBooking = async (bookingId, userId) => {
+    setDetails({
+      userId,
+      bookingId,
+    });
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/bookings/${bookingId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        setBookings((prevBookings) =>
+          prevBookings.filter((booking) => booking._id !== bookingId)
+        );
+        // alert("Booking terminated successfully");
+
+        if (socket) {
+          socket.emit("terminateBooking", userId, bookingId);
+        }
+      } else {
+        throw new Error("Failed to terminate booking");
+      }
+    } catch (error) {
+      console.error("Error terminating booking:", error);
+    }
+  };
+
   return (
     <div className="user-dashboard">
       <div className="user-list-header">
@@ -57,6 +92,7 @@ const AdminBookings = () => {
           <span>Tickets</span>
           <span>Price</span>
           <span>Total Price</span>
+          <span>Actions</span>
         </div>
         {bookings.map((booking) => (
           <div className="flex users-list" key={booking._id}>
@@ -82,6 +118,13 @@ const AdminBookings = () => {
                 )}
               $
             </span>
+            <button
+              onClick={() =>
+                handleTerminateBooking(booking._id, booking.userId)
+              }
+            >
+              Terminate
+            </button>
           </div>
         ))}
       </div>

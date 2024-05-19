@@ -125,6 +125,7 @@ app.post("/profile", async (req, res) => {
       username: user.username,
       email: user.email,
       role: user.role,
+      id: user._id,
     });
   } catch (error) {
     console.error("Error fetching user profile:", error);
@@ -611,5 +612,27 @@ app.put("/user/:userId/bookings/:bookingId", async (req, res) => {
   } catch (error) {
     console.error("Error updating booking:", error);
     return res.status(500).json({ message: "Internal Server Error." });
+  }
+});
+
+app.delete("/bookings/:id", async (req, res) => {
+  const bookingId = req.params.id;
+
+  try {
+    const booking = await database
+      .collection("bookings")
+      .findOne({ _id: new ObjectId(bookingId) });
+
+    if (!booking) {
+      return res.status(404).send({ message: "Booking not found" });
+    }
+
+    await database
+      .collection("bookings")
+      .deleteOne({ _id: new ObjectId(bookingId) });
+
+    res.status(200).send({ message: "Booking deleted successfully" });
+  } catch (error) {
+    res.status(500).send({ message: "Internal Server Error" });
   }
 });

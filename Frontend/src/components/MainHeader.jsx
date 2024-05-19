@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import DownArrow from "../assets/DownArrow";
+import { io } from "socket.io-client";
+import { useSocket } from "../SocketsContext";
+
+// const socket = io("http://localhost:3005");
 
 export default function MainHeader(props) {
   const navigate = useNavigate();
@@ -10,6 +14,27 @@ export default function MainHeader(props) {
   const [isLoggedin, setIsLoggedin] = useState(authToken);
   const [profile, setProfile] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const socket = useSocket();
+
+  useEffect(() => {
+    if (socket === null) {
+      return;
+    }
+    socket.on("addNewUser", profile?.id);
+    socket.on("bookingTerminated", (data) => {
+      setNotifications((prev) => [
+        ...prev,
+        `Booking ${data.bookingId} has been terminated`,
+      ]);
+    });
+
+    return () => {
+      socket.off("bookingTerminated");
+      socket.off("addNewUser");
+    };
+  }, [socket, profile]);
+
   useEffect(() => {
     const fetchhh = async (username) => {
       const response = await fetchUserProfile(username);

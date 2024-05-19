@@ -5,6 +5,7 @@ import Ticket from "../../assets/user/Ticket";
 import Price from "../../assets/user/Price";
 import Edit from "../../assets/user/Edit";
 import Delete from "../../assets/user/Delete";
+import { io } from "socket.io-client";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -13,6 +14,16 @@ const Bookings = () => {
   const [editedDate, setEditedDate] = useState(null);
   const [editedNumTickets, setEditedNumTickets] = useState(null);
   const [editedBookingId, setEditedBookingId] = useState(null);
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    const newSocket = io("http://localhost:3005");
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
 
   const calculateTotalPrice = (data) => {
     let totalPrice = 0;
