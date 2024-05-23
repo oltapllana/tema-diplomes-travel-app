@@ -1,7 +1,7 @@
 .notifications-wrapper {
   width: 400px;
   z-index: 9999;
-  height: 300px;
+  max-height: 300px;
   overflow: auto;
   position: absolute;
   top: 60px;

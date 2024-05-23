@@ -668,3 +668,58 @@ app.get("/notifications/:userId", async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 });
+
+app.get("/search", async (req, res) => {
+  const query = req.query.q;
+  if (!query) {
+    return res.status(400).send("Query is required");
+  }
+
+  try {
+    const placesCollection = database.collection("travelappcollection");
+
+    const placeResult = await placesCollection.findOne(
+      {
+        "thingstodo.place": new RegExp(query, "i"),
+      },
+      {
+        projection: { "thingstodo.$": 1 },
+      }
+    );
+    const placeResultObject = await placesCollection.findOne({
+      "thingstodo.place": new RegExp(query, "i"),
+    });
+
+    if (placeResult) {
+      const otherResults = await placesCollection
+        .find({
+          city: placeResultObject.city,
+        })
+        .toArray();
+      return res.json({
+        searchedResult: placeResult,
+        otherResults: {
+          thingstodo: (placeResultObject.thingstodo =
+            placeResultObject.thingstodo.filter((item) => {
+              console.log(item.place !== placeResult.thingstodo[0].place);
+              return item.place !== placeResult.thingstodo[0].place;
+            })),
+          city: placeResultObject.city,
+        },
+      });
+    }
+
+    const cityResult = await placesCollection.findOne({
+      city: new RegExp(query, "i"),
+    });
+
+    if (cityResult) {
+      return res.json({ searchedResult: cityResult });
+    }
+
+    res.json({ searchedResult: null });
+  } catch (error) {
+    console.error("Error fetching results:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
