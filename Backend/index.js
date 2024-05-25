@@ -42,7 +42,7 @@ const upload = multer({ storage: storage });
 let userIdCounter = 1;
 
 app.post("/register", async (req, res) => {
-  const { username, email, password, role } = req.body;
+  const { username, email, password, role, firstName, lastName } = req.body;
 
   try {
     const salt = await bcrypt.genSalt();
@@ -56,6 +56,8 @@ app.post("/register", async (req, res) => {
       email,
       hashedPassword,
       role,
+      firstName,
+      lastName,
     };
 
     await database.collection("users").insertOne(newUser);
@@ -129,6 +131,56 @@ app.post("/profile", async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching user profile:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/profile/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await database
+      .collection("users")
+      .findOne({ _id: new ObjectId(userId) });
+
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).send({ message: "Profile not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    res.status(500).send({ message: "Server error" });
+  }
+});
+
+app.put("/profile/:id", upload.single("profilePicture"), async (req, res) => {
+  const { id } = req.params;
+  const updatedFields = req.body;
+  console.log(req.file);
+
+  try {
+    const existingProfile = await database.collection("users").findOne({
+      _id: ObjectId(id),
+    });
+    if (!existingProfile) {
+      return res.status(404).json({ error: "Profile not found" });
+    }
+
+    if (req.file) {
+      updatedFields.profilePicture = req.file.filename; // Save the filename of the uploaded image
+    }
+
+    for (const key in updatedFields) {
+      existingProfile[key] = updatedFields[key];
+    }
+
+    await database
+      .collection("users")
+      .updateOne({ _id: ObjectId(id) }, { $set: existingProfile });
+
+    res.json(existingProfile);
+  } catch (error) {
+    console.error("Error updating user profile:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -705,6 +757,7 @@ app.get("/search", async (req, res) => {
               return item.place !== placeResult.thingstodo[0].place;
             })),
           city: placeResultObject.city,
+          cityId: placeResultObject._id,
         },
       });
     }

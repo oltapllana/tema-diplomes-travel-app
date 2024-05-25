@@ -230,4 +230,24 @@ button {
 .cursor.active {
   color: #4a85f6;
   font-weight: 700;
+}
+
+.travel-search-wrapper button.search-btn {
+  padding: 10px 20px;
+  border-radius: 30px;
+  position: absolute;
+  right: 34%;
+  border: 1px solid gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  color: gray;
+  font-size: 15px;
+}
+
+.travel-header li img {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
 }/*# sourceMappingURL=components.css.map */

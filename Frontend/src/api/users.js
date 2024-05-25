@@ -1,17 +1,31 @@
-export const registerUser = async ({ username, email, password, role }) => {
+export const registerUser = async ({
+  username,
+  email,
+  password,
+  role,
+  firstName,
+  lastName,
+}) => {
   try {
     const response = await fetch("http://localhost:3000/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, email, password, role }),
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+        role,
+        firstName,
+        lastName,
+      }),
     });
 
     return response.json();
   } catch (error) {
     console.error("Error registering user:", error.message);
-    throw error; // Re-throw the error to handle it elsewhere if needed
+    throw error;
   }
 };
 

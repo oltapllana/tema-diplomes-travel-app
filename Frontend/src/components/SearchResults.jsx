@@ -1,10 +1,27 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { SearchContext } from "../SearchContext";
 import MainHeader from "./MainHeader";
+import BookTicket from "./user/BookTicket";
+import Empty from "./Empty";
 
 export const SearchResults = () => {
+  const [openAvailabilityModal, setOpenAvailabilityModal] = useState(false);
+  const [tickets, setTickets] = useState(0);
+  const [placeDetails, setPlaceDetails] = useState({});
+
   const { results } = useContext(SearchContext);
-  console.log("results", results);
+
+  const checkAvailability = async (planId, placeId) => {
+    setOpenAvailabilityModal(true);
+    const getAvailability = async () => {
+      const response = await fetch(
+        `http://localhost:3000/availability/${planId}/${placeId}`
+      );
+      return response.json();
+    };
+    const availability = await getAvailability();
+    setTickets(availability.ticketsLeft);
+  };
 
   return (
     <>
@@ -37,10 +54,8 @@ export const SearchResults = () => {
                   <div className="flex flex-end gap-5">
                     <button
                       onClick={() => {
-                        // checkAvailability(plan.cityId, place.id);
-                        // setPlaceTicket(place.place);
-                        // setPlaceId(place.id);
-                        // setPlaceDetails(place);
+                        checkAvailability(results.searchedResult._id, place.id);
+                        setPlaceDetails(place);
                       }}
                       className="btn pink-btn"
                     >
@@ -79,10 +94,11 @@ export const SearchResults = () => {
                     <div className="flex flex-end gap-5">
                       <button
                         onClick={() => {
-                          // checkAvailability(plan.cityId, place.id);
-                          // setPlaceTicket(place.place);
-                          // setPlaceId(place.id);
-                          // setPlaceDetails(place);
+                          checkAvailability(
+                            results.otherResults.cityId,
+                            place.id
+                          );
+                          setPlaceDetails(place);
                         }}
                         className="btn pink-btn"
                       >
@@ -95,16 +111,16 @@ export const SearchResults = () => {
             </div>
           </div>
         )}
-        {/* {!isLoading && travelPlans.length === 0 && <Empty />} */}
+        {!results.searchedResult && <Empty />}
       </div>
-      {/* {openAvailabilityModal && (
+      {openAvailabilityModal && (
         <BookTicket
           openAvailabilityModal={openAvailabilityModal}
           setOpenAvailabilityModal={setOpenAvailabilityModal}
           item={placeDetails}
           tickets={tickets}
         />
-      )} */}
+      )}
     </>
   );
 };

@@ -6,6 +6,7 @@ import "./styles/admin.css";
 import "./styles/wishlist.css";
 import "./styles/booking.css";
 import "./styles/notifications.css";
+import "./styles/user.css";
 import Homepage from "./components/Homepage";
 import "./styles/components.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -17,6 +18,7 @@ import Bookings from "./components/user/Bookings";
 import { SocketProvider } from "./SocketsContext";
 import SearchResults from "./components/SearchResults";
 import { SearchProvider } from "./SearchContext";
+import Profile from "./components/Profile";
 
 function App() {
   return (
@@ -31,6 +33,7 @@ function App() {
             <Route path="/places" element={<PopularPlaces />} />
             <Route path="/bookings" element={<Bookings />} />
             <Route path="/search-results" element={<SearchResults />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </Router>
       </SocketProvider>

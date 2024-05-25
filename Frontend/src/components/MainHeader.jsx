@@ -6,6 +6,7 @@ import { io } from "socket.io-client";
 import { useSocket } from "../SocketsContext";
 import Notification from "../assets/Notification";
 import Notifications from "./Notifications";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function MainHeader(props) {
   const navigate = useNavigate();
@@ -20,27 +21,29 @@ export default function MainHeader(props) {
   const socket = useSocket();
 
   useEffect(() => {
-    const fetchhh = async (username) => {
-      const response = await fetchUserProfile(username);
+    const fetchhh = async () => {
+      const response = await fetchUserProfile();
       if (response.error) {
         return;
       }
       setProfile(response);
     };
     if (isLoggedin) {
-      fetchhh(username);
+      fetchhh();
     }
   }, []);
 
-  const fetchUserProfile = async (username) => {
+  const fetchUserProfile = async () => {
     try {
-      const response = await fetch("http://localhost:3000/profile", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username }),
-      });
+      const response = await fetch(
+        `http://localhost:3000/profile/${localStorage.getItem("id")}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch user profile");
@@ -118,16 +121,33 @@ export default function MainHeader(props) {
                 Login
               </button>
             )}
-            {isLoggedin && (
-              <button
-                onClick={() => {
-                  localStorage.removeItem("authToken");
-                  setIsLoggedin(false);
-                  navigate("/login-register");
-                }}
-              >
-                Logout
-              </button>
+            {isLoggedin && profile.profilePicture && (
+              <img
+                onClick={() => setIsDropdownOpen((prevState) => !prevState)}
+                src={require(`../../../Backend/uploads/${profile.profilePicture}`)}
+                alt="test"
+              />
+            )}
+            {isLoggedin && !profile.profilePicture && (
+              <FaUserCircle
+                size={30}
+                onClick={() => setIsDropdownOpen((prevState) => !prevState)}
+              />
+            )}
+            {isDropdownOpen && (
+              <div className="user-profile-dropdown">
+                <span onClick={() => navigate("/profile")}>See profile</span>
+                <span>Settings</span>
+                <span
+                  onClick={() => {
+                    localStorage.removeItem("authToken");
+                    setIsLoggedin(false);
+                    navigate("/login-register");
+                  }}
+                >
+                  Logout
+                </span>
+              </div>
             )}
           </li>
         </ul>
@@ -160,7 +180,9 @@ export default function MainHeader(props) {
           )}
         </>
       )}
-      {isNotificationOpen && <Notifications notifications={notifications} isLoading={isLoading} />}
+      {isNotificationOpen && (
+        <Notifications notifications={notifications} isLoading={isLoading} />
+      )}
     </header>
   );
 }

@@ -3,6 +3,8 @@ import { registerUser } from "../../api/users";
 
 export default function Register() {
   const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
     username: "",
     email: "",
     password: "",
@@ -21,8 +23,25 @@ export default function Register() {
       return;
     }
   };
+
   return (
     <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="firstName"
+        placeholder="First Name"
+        value={formData.firstName}
+        onChange={handleInputChange}
+        required
+      />
+      <input
+        type="text"
+        name="lastName"
+        placeholder="Last Name"
+        value={formData.lastName}
+        onChange={handleInputChange}
+        required
+      />
       <input
         type="text"
         name="username"
@@ -32,7 +51,7 @@ export default function Register() {
         required
       />
       <input
-        type="text"
+        type="email"
         name="email"
         placeholder="Email"
         value={formData.email}

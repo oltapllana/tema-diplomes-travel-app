@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../SearchContext";
+import Search from "../assets/Search";
 
 export default function SearchDestinationInput() {
   const [query, setQuery] = useState("");
@@ -32,7 +33,10 @@ export default function SearchDestinationInput() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button onClick={handleSearch}>Search</button>
+      <button className='search-btn' onClick={handleSearch}>
+        <Search />
+        Search
+      </button>
     </div>
   );
 }
