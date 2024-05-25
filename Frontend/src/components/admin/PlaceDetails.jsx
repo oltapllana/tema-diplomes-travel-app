@@ -75,7 +75,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
           </div>
         </div>
         <div>
-          <h2 className="bold">Places that we will visit with package are:</h2>
+          <h2 className="bold">Things to do in this place: </h2>
           <div className="grid-3 margin-top-10">
             {place.thingstodo.map((thing) => {
               return (
