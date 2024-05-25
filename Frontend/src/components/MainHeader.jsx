@@ -137,7 +137,6 @@ export default function MainHeader(props) {
             {isDropdownOpen && (
               <div className="user-profile-dropdown">
                 <span onClick={() => navigate("/profile")}>See profile</span>
-                <span>Settings</span>
                 <span
                   onClick={() => {
                     localStorage.removeItem("authToken");

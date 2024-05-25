@@ -112,7 +112,6 @@ const Profile = () => {
               )}
             </div>
             <div className="profile-image-upload">
-              <label htmlFor="profilePictureInput">Image:</label>
               <input
                 type="file"
                 id="profilePictureInput"
@@ -120,13 +119,15 @@ const Profile = () => {
                 onChange={handleProfilePictureChange}
                 style={{ display: "none" }}
               />
-              <label htmlFor="profilePictureInput">
-                <FaUpload
-                  size={20}
-                  className="upload-icon"
-                  onClick={() => console.log("img upload click")}
-                />
-              </label>
+              {isEditing && (
+                <label htmlFor="profilePictureInput">
+                  <FaUpload
+                    size={20}
+                    className="upload-icon"
+                    onClick={() => console.log("img upload click")}
+                  />
+                </label>
+              )}
             </div>
           </div>
           {profile && (

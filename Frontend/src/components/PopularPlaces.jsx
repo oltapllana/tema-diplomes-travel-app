@@ -63,8 +63,15 @@ const PopularPlaces = () => {
                 <div className="place-description">
                   <h2>{place.title}</h2>
                   <span>{getText(place.description, 100, place)}</span>
-                  <button className="book-btn">See Details</button>
-                  <ReviewPlaces placeId={place.id} />
+                  <button
+                    className="book-btn"
+                    onClick={() => {
+                      setShowDetails(true);
+                      setPlaceDetails(place);
+                    }}
+                  >
+                    See Details
+                  </button>
                 </div>
               </div>
             ))}
