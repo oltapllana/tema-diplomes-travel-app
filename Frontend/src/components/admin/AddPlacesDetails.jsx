@@ -5,20 +5,23 @@ import Modal from "../Modal";
 
 const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
   const [thingsToDo, setThingsToDo] = useState([
-    { text: "", place: "", image: null, price: "" },
+    { text: "", place: "", image: null, price: "", lat: "", lng: "" },
   ]);
-  const [shouldSumbit, setShouldSumbit] = useState(false);
   const [thingsToDoCounter, setThingsToDoCounter] = useState(1);
 
   const addTextAndImages = async (e, placesId, textAndImagesData) => {
     e.preventDefault();
     const formData = new FormData();
-    textAndImagesData.forEach(({ text, place, image, price }, index) => {
-      formData.append("texts", text);
-      formData.append("places", place);
-      formData.append("images", image);
-      formData.append("prices", price);
-    });
+    textAndImagesData.forEach(
+      ({ text, place, image, price, lat, lng }, index) => {
+        formData.append("texts", text);
+        formData.append("places", place);
+        formData.append("images", image);
+        formData.append("prices", price);
+        formData.append("latitudes", lat);
+        formData.append("longitudes", lng);
+      }
+    );
 
     const response = await fetch(`http://localhost:3000/places/${placesId}`, {
       method: "POST",
@@ -53,6 +56,18 @@ const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
     setThingsToDo(newInputs);
   };
 
+  const handleAddThingToDoLat = (index, event) => {
+    const newInputs = [...thingsToDo];
+    newInputs[index] = { ...newInputs[index], lat: event.target.value };
+    setThingsToDo(newInputs);
+  };
+
+  const handleAddThingToDoLng = (index, event) => {
+    const newInputs = [...thingsToDo];
+    newInputs[index] = { ...newInputs[index], lng: event.target.value };
+    setThingsToDo(newInputs);
+  };
+
   return (
     <>
       <div className="place-details add-place-wrapper">
@@ -75,7 +90,6 @@ const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
               />
               <input
                 type="file"
-                className="aa"
                 onChange={(event) => handleAddThingToDoImage(index, event)}
               />
               <input
@@ -84,6 +98,20 @@ const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
                 value={thingsToDo[index]?.price}
                 onChange={(event) => handleAddThingToDoPrice(index, event)}
                 placeholder="Shto cmimin"
+              />
+              <input
+                type="text"
+                name="lat"
+                value={thingsToDo[index]?.lat}
+                onChange={(event) => handleAddThingToDoLat(index, event)}
+                placeholder="Latitude"
+              />
+              <input
+                type="text"
+                name="lng"
+                value={thingsToDo[index]?.lng}
+                onChange={(event) => handleAddThingToDoLng(index, event)}
+                placeholder="Longitude"
               />
               <div className="flex align-center gap-10">
                 <div

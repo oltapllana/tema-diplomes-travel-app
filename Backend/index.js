@@ -367,6 +367,8 @@ app.post("/places/:placesId", upload.array("images"), async (req, res) => {
     const texts = req.body.texts;
     const places = req.body.places;
     const prices = req.body.prices;
+    const latitudes = req.body.latitudes;
+    const longitudes = req.body.longitudes;
     const images = req.files.map((file) => file.filename);
 
     await database.collection("travelappcollection").updateOne(
@@ -380,6 +382,8 @@ app.post("/places/:placesId", upload.array("images"), async (req, res) => {
               prices: prices[index],
               image: images[index],
               place: places[index],
+              latitudes: latitudes[index],
+              longitudes: longitudes[index],
             })),
           },
         },

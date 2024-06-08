@@ -118,18 +118,26 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
                     <span>{thing.price}</span>
                   </div>
                   {role === "user" && (
-                    <button
-                      className="btn pink-btn"
-                      onClick={() => {
-                        setPlaceTicket(thing.place);
-                        setPlaceId(thing.id);
-                        setOpenAvailabilityModal(true);
-                        checkAvailability(thing.id);
-                        setPlaceDetails(thing);
-                      }}
-                    >
-                      Rezervo tani
-                    </button>
+                    <>
+                      <a
+                        href={`https://www.google.com/maps/?q=${thing.latitudes},${thing.longitudes}`}
+                        target="_blank"
+                      >
+                        Shiko lokacionin
+                      </a>
+                      <button
+                        className="btn pink-btn"
+                        onClick={() => {
+                          setPlaceTicket(thing.place);
+                          setPlaceId(thing.id);
+                          setOpenAvailabilityModal(true);
+                          checkAvailability(thing.id);
+                          setPlaceDetails(thing);
+                        }}
+                      >
+                        Rezervo tani
+                      </button>
+                    </>
                   )}
                 </div>
               );
