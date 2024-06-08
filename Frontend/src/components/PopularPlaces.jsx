@@ -36,7 +36,7 @@ const PopularPlaces = () => {
             setPlaceDetails(place);
           }}
         >
-          ...show more
+          ...shiko më shumë
         </span>
       </>
     );
@@ -46,7 +46,7 @@ const PopularPlaces = () => {
     <>
       <MainHeader />
       <div className="container position-relative top-65">
-        <h1>Places</h1>
+        <h1>Vendet</h1>
         {!showDetails && (
           <div className="grid-3">
             {places.map((place) => (
@@ -70,7 +70,7 @@ const PopularPlaces = () => {
                       setPlaceDetails(place);
                     }}
                   >
-                    See Details
+                    Shih detajet
                   </button>
                 </div>
               </div>

@@ -27,7 +27,7 @@ const PlacesList = () => {
             setShowPlaceDetails(true);
           }}
         >
-          ...show more
+          ...shiko më shumë
         </span>
       </>
     );
@@ -49,7 +49,7 @@ const PlacesList = () => {
       {!showPlaceDetails && (
         <div className="user-dashboard">
           <div className="user-list-header">
-            <h2>Places List</h2>
+            <h2>Lista e vendeve</h2>
           </div>
           {!isAddPlacesFormShown && (
             <div className="admin-table places-admin-list">
@@ -76,7 +76,7 @@ const PlacesList = () => {
                           setIsAddPlacesDetailsOpen(true);
                         }}
                       >
-                        Add details for this place
+                        Shto detaje për këtë vend
                       </button>
                     </div>
                   </div>
@@ -90,7 +90,10 @@ const PlacesList = () => {
         <PlaceDetails place={place} setShowPlaceDetails={setShowPlaceDetails} />
       )}
       {isAddPlacesDetailsOpen && (
-        <Modal title="Things to do" setIsDisplay={setIsAddPlacesDetailsOpen}>
+        <Modal
+          title="Gjërat për të bërë"
+          setIsDisplay={setIsAddPlacesDetailsOpen}
+        >
           <AddPlacesDetails
             setIsAddPlacesDetailsOpen={setIsAddPlacesDetailsOpen}
             place={place}

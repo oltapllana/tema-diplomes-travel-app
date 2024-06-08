@@ -64,14 +64,14 @@ const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
                 name="thingsToDo"
                 value={thingsToDo[index]?.text}
                 onChange={(event) => handleAddThingToDoText(index, event)}
-                placeholder="Add a thing to do"
+                placeholder="Shto një gjë për të bërë"
               />
               <input
                 type="text"
                 name="place"
                 value={thingsToDo[index]?.place}
                 onChange={(event) => handleAddThingToDoPlace(index, event)}
-                placeholder="Add a place"
+                placeholder="Shto një vend"
               />
               <input
                 type="file"
@@ -83,7 +83,7 @@ const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
                 name="price"
                 value={thingsToDo[index]?.price}
                 onChange={(event) => handleAddThingToDoPrice(index, event)}
-                placeholder="Add price"
+                placeholder="Shto cmimin"
               />
               <div className="flex align-center gap-10">
                 <div

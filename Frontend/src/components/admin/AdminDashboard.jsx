@@ -34,7 +34,7 @@ export default function AdminDashboard() {
               setIsBooking(false);
             }}
           >
-            User Dashboard
+            Paneli i përdoruesit
           </span>
           <span
             className={`cursor ${isPlacesList ? "active" : ""}`}
@@ -46,7 +46,7 @@ export default function AdminDashboard() {
               setIsBooking(false);
             }}
           >
-            Places list
+            Lista e vendeve
           </span>
           <span
             className={`cursor ${isAddNewPlaces ? "active" : ""}`}
@@ -58,7 +58,7 @@ export default function AdminDashboard() {
               setIsUserDashboard(false);
             }}
           >
-            Add new place
+            Shto një vend të ri
           </span>
           <span
             className={`cursor ${isBooking ? "active" : ""}`}
@@ -70,7 +70,7 @@ export default function AdminDashboard() {
               setIsUserDashboard(false);
             }}
           >
-            Bookings
+            Rezervimet
           </span>
         </div>
         {isUserDashboard && <UsersList />}

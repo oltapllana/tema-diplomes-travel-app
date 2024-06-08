@@ -178,7 +178,7 @@ const Profile = () => {
                 className="send-button"
                 onClick={isEditing ? handleSaveClick : handleEditClick}
               >
-                {isEditing ? "Save" : "Edit"}
+                {isEditing ? "Ruaj" : "Ndrysho"}
               </button>
             </>
           )}

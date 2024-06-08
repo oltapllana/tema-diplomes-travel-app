@@ -32,13 +32,13 @@ const Availability = ({
     <Modal
       isDisplay={availability}
       setIsDisplay={setAvailability}
-      title={`Number of tickets for ${thingToDo.place}`}
+      title={`Numri i biletave për ${thingToDo.place}`}
     >
       <form
         onSubmit={handleSubmit}
         className="flex column-direction availability-form"
       >
-        <label htmlFor="ticketsLeft">Number of available tickets:</label>
+        <label htmlFor="ticketsLeft">Numri i biletave në dispozicion: </label>
         <input
           type="number"
           id="ticketsLeft"
@@ -46,7 +46,7 @@ const Availability = ({
           onChange={(e) => setTicketsLeft(parseInt(e.target.value))}
         />
         <button className="availability-btn" type="submit">
-          Set Availability
+          Cakto numrin e biletave
         </button>
       </form>
     </Modal>

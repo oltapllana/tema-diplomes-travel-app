@@ -74,7 +74,7 @@ export default function Register() {
         onChange={handleInputChange}
         required
       />
-      <button type="submit">Register</button>
+      <button type="submit">Regjistrohu</button>
     </form>
   );
 }

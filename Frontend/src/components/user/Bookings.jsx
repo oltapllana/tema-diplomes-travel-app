@@ -205,7 +205,7 @@ const Bookings = () => {
                             onClick={() => handleEdit(booking._id)}
                             className="booking-btn booking-edit-btn"
                           >
-                            <Edit /> Edit
+                            <Edit /> Ndrysho
                           </button>
                           <button
                             onClick={() => handleDelete(booking._id)}
@@ -221,19 +221,19 @@ const Bookings = () => {
                             onClick={handleSave}
                             className="booking-btn booking-delete-btn"
                           >
-                            Save
+                            Ruaj
                           </button>
                           <button
                             onClick={() => setEditedBookingId(null)}
                             className="booking-btn booking-delete-btn"
                           >
-                            Cancel
+                            Anulo
                           </button>
                         </>
                       )}
                     </div>
                     <span>
-                      total price{" "}
+                      Cmimi total{" "}
                       {booking.numTickets *
                         +booking.bookedPlace.price.substring(
                           0,
@@ -249,8 +249,8 @@ const Bookings = () => {
           {!isLoading && bookings.length === 0 && <Empty />}
         </div>
         <div className="total-price-wrapper">
-          Total price of your booking is: {totalPrice}$
-          <div className="no-credit-card">No credit card needed</div>
+          Çmimi total i rezervimeve tuaj është: {totalPrice}$
+          <div className="no-credit-card">Nuk nevojitet karta kreditore</div>
         </div>
       </div>
     </>

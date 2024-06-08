@@ -29,13 +29,13 @@ export default function SearchDestinationInput() {
       <input
         type="text"
         className="travel-search"
-        placeholder="Search your next destination..."
+        placeholder="Kërkoni destinacionin tuaj të ardhshëm..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button className='search-btn' onClick={handleSearch}>
+      <button className="search-btn" onClick={handleSearch}>
         <Search />
-        Search
+        Kërko
       </button>
     </div>
   );

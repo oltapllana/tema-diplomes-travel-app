@@ -59,7 +59,7 @@ export const SearchResults = () => {
                       }}
                       className="btn pink-btn"
                     >
-                      Check availability
+                      Kontrollo disponueshmërinë
                     </button>
                   </div>
                 </div>
@@ -70,7 +70,7 @@ export const SearchResults = () => {
         {results.otherResults && (
           <div>
             <div className="wishlist-item-wrapper">
-              <h2>Similar places</h2>
+              <h2>Vende të ngjashme</h2>
 
               <h2>{results.otherResults.city.toUpperCase()}</h2>
               {results.otherResults.thingstodo.map((place) => {
@@ -102,7 +102,7 @@ export const SearchResults = () => {
                         }}
                         className="btn pink-btn"
                       >
-                        Check availability
+                        Kontrollo disponueshmërinë
                       </button>
                     </div>
                   </div>

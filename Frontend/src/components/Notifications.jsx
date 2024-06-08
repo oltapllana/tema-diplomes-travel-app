@@ -12,7 +12,7 @@ const Notifications = ({ notifications, isLoading }) => {
           />
           <div className="details">
             <span>
-              {notification.admin} {notification.message} booking to{" "}
+              {notification.admin} anuloj rezervimin tuaj në{" "}
               {notification.bookingDetails.place}
             </span>
             <span className="date">

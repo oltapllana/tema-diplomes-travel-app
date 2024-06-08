@@ -91,14 +91,13 @@ const UsersList = () => {
     <>
       <div className="user-dashboard">
         <div className="user-list-header">
-          <h2>User Dashboard</h2>
-          <button>Add user</button>
+          <h2>Paneli i përdoruesit</h2>
         </div>
         <div className="admin-table">
           <div className="flex users-list user-title">
             <span>Username</span>
-            <span>Role</span>
-            <span>Actions</span>
+            <span>Roli</span>
+            <span>Veprimet</span>
           </div>
           {users.map((user) => (
             <div className="flex users-list" key={user._id}>
@@ -123,11 +122,11 @@ const UsersList = () => {
           className="edit-wrapper"
         >
           <form onSubmit={handleSubmit}>
-            <h3>Edit</h3>
+            <h3>Ndrysho</h3>
             <Select
               id="mySelect"
               options={[
-                { value: "1", label: "user" },
+                { value: "1", label: "përdoruesi" },
                 { value: "2", label: "admin" },
               ]}
               value={selectedOption}
@@ -146,15 +145,15 @@ const UsersList = () => {
           className="edit-wrapper"
         >
           <form onSubmit={handleDelete}>
-            <p>Are you sure you want to delete this user? </p> 
+            <p>Jeni i sigurt që dëshironi ta fshini këtë përdorues? </p>
             <button type="submit" className="delete-button admin-submit-btn">
-              Yes
+              Po
             </button>
             <button
               onClick={() => setIsDeleteOpen(false)}
               className="delete-button"
             >
-              No
+              Jo
             </button>
           </form>
         </Modal>

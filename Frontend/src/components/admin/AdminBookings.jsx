@@ -83,17 +83,17 @@ const AdminBookings = () => {
   return (
     <div className="user-dashboard">
       <div className="user-list-header">
-        <h2>Booking List</h2>
+        <h2>Lista e rezervmieve</h2>
       </div>
       <div className="admin-table">
         <div className="flex users-list user-title">
-          <span>User</span>
-          <span>Place</span>
-          <span>Date/Time</span>
-          <span>Tickets</span>
-          <span>Price</span>
-          <span>Total Price</span>
-          <span>Actions</span>
+          <span>Përdoruesi</span>
+          <span>Vendi</span>
+          <span>Data/Ora</span>
+          <span>Biletat</span>
+          <span>Cmimi</span>
+          <span>Cmimi total</span>
+          <span>Veprimet</span>
         </div>
         {bookings.map((booking) => (
           <div className="flex users-list" key={booking._id}>
@@ -125,7 +125,7 @@ const AdminBookings = () => {
                 handleTerminateBooking(booking._id, booking.userId)
               }
             >
-              Cancel
+              Anulo
             </button>
           </div>
         ))}

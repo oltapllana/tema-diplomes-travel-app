@@ -89,16 +89,16 @@ export default function MainHeader(props) {
       {profile?.role === "user" && (
         <ul>
           <li>
-            <span onClick={() => navigate("/")}>Homepage</span>
+            <span onClick={() => navigate("/")}>Faqja kryesore</span>
           </li>
           <li>
-            <span onClick={() => navigate("/places")}>Places</span>
+            <span onClick={() => navigate("/places")}>Vendet</span>
           </li>
           <li>
-            <span onClick={() => navigate("/wishlist")}>Wishlist</span>
+            <span onClick={() => navigate("/wishlist")}>Lista e dëshirave</span>
           </li>
           <li>
-            <span onClick={() => navigate("/bookings")}>Bookings</span>
+            <span onClick={() => navigate("/bookings")}>Rezervimet</span>
           </li>
           <li>
             <div
@@ -118,7 +118,7 @@ export default function MainHeader(props) {
                   navigate("/login-register");
                 }}
               >
-                Login
+                Kycu
               </button>
             )}
             {isLoggedin && profile.profilePicture && (
@@ -136,7 +136,7 @@ export default function MainHeader(props) {
             )}
             {isDropdownOpen && (
               <div className="user-profile-dropdown">
-                <span onClick={() => navigate("/profile")}>See profile</span>
+                <span onClick={() => navigate("/profile")}>Shiko profilin</span>
                 <span
                   onClick={() => {
                     localStorage.removeItem("authToken");
@@ -144,7 +144,7 @@ export default function MainHeader(props) {
                     navigate("/login-register");
                   }}
                 >
-                  Logout
+                  Ckycu
                 </span>
               </div>
             )}
@@ -174,7 +174,7 @@ export default function MainHeader(props) {
               }}
               className="logout-container"
             >
-              Logout
+              Ckycu
             </div>
           )}
         </>

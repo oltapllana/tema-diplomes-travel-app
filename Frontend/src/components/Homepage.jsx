@@ -15,7 +15,7 @@ const Homepage = () => {
             <MainHeader setIsShown={setIsShown} />
 
             <div className="travel-description">
-              <h1>Discover Amazing Places and Experiences</h1>
+              <h1>Shihni vende dhe përvoja të mahnitshme</h1>
               <SearchDestinationInput />
             </div>
           </div>

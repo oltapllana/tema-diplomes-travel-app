@@ -47,10 +47,10 @@ const BookTicket = (props) => {
     <Modal
       isDisplay={props.openAvailabilityModal}
       setIsDisplay={props.setOpenAvailabilityModal}
-      title={`Available ticket for: ${props.item?.place}`}
+      title={`Bileta e disponueshme për: ${props.item?.place}`}
     >
       <form className="book-ticket-form" onSubmit={handleBooking}>
-        <span>Tickets left: {props.tickets}</span>
+        <span>Numri i biletave të mbetura: {props.tickets}</span>
         <div className="ticket-counter">
           <button
             className="ticket-number"
@@ -69,7 +69,7 @@ const BookTicket = (props) => {
           </button>
         </div>
         <label>
-          Select Date:
+          Seleto datën:
           <input
             type="date"
             value={selectedDate}
@@ -79,12 +79,12 @@ const BookTicket = (props) => {
         </label>
 
         <label>
-          Select Hour:
+          Selekto orën:
           <select
             value={selectedHour}
             onChange={(event) => setSelectedHour(event.target.value)}
           >
-            <option value="">Select Hour</option>
+            <option value="">Selekto orën</option>
             {[...Array(13).keys()].map((hour) => (
               <option key={hour} value={`${hour + 8}:00`}>{`${
                 hour + 8
@@ -93,7 +93,7 @@ const BookTicket = (props) => {
           </select>
           {error && <span>{error}</span>}
         </label>
-        <button type="submit">Book Tickets</button>
+        <button type="submit">Rezervo biletat</button>
       </form>
     </Modal>
   );

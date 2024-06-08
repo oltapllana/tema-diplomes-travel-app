@@ -56,31 +56,31 @@ const AddPlaces = ({ place, setPlace, setShowAddPlacesDetails }) => {
       <MainHeader />
       <div className="add-place-wrapper">
         <div className="user-list-header">
-          <h2>Add data for a new place</h2>
+          <h2>Shto të dhëna për vendin e ri</h2>
         </div>
         <form className="add-place-form" onSubmit={handleSubmit}>
           <div className="grid2 gap-20">
             <div className="flex column-direction">
-              <label htmlFor="title">Title</label>
+              <label htmlFor="title">Titulli</label>
               <input
                 type="text"
                 id="title"
                 name="title"
                 value={formDatas.title}
                 onChange={handleChange}
-                placeholder="Entrt the title..."
+                placeholder="Shkruaj titullin..."
               />
-              <label htmlFor="description">Description</label>
+              <label htmlFor="description">Përshkrimi</label>
               <textarea
                 id="description"
                 name="description"
                 value={formDatas.description}
                 onChange={handleChange}
-                placeholder="Enter the description..."
+                placeholder="Shkruaj përshkrimin..."
               ></textarea>
             </div>
             <div className="flex column-direction">
-              <label htmlFor="image">Add Image</label>
+              <label htmlFor="image">Shto fotografi</label>
               <input
                 type="file"
                 id="image"
@@ -88,20 +88,20 @@ const AddPlaces = ({ place, setPlace, setShowAddPlacesDetails }) => {
                 onChange={handleImageChange}
               />
 
-              <label htmlFor="city">City</label>
+              <label htmlFor="city">Qyteti</label>
               <input
                 type="text"
                 id="city"
                 name="city"
                 value={formDatas.city}
                 onChange={handleChange}
-                placeholder="Enter the city..."
+                placeholder="Shkruaj qytetin..."
               />
             </div>
           </div>
           {error && <span className="red-error">{error}</span>}
           <button className="btn blue-btn" type="submit">
-            Add Place
+            Shto vendin
           </button>
         </form>
       </div>

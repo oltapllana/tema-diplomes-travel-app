@@ -58,8 +58,8 @@ export default function Login() {
         onChange={handleInputChange}
         required
       />
-      {message && <p className="red-error">{message}. Please register!</p>}
-      <button type="submit">Login</button>
+      {message && <p className="red-error">{message}. Ju lutem regjistrohuni!</p>}
+      <button type="submit">Kycu</button>
     </form>
   );
 }

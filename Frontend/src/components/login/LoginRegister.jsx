@@ -13,28 +13,28 @@ const LoginRegister = () => {
       <div className="aa"></div>
       <div className="login-wrapper">
         <div className="login-container">
-          <h1 className="login-title">{isRegister ? "Register" : "Login"}</h1>
+          <h1 className="login-title">{isRegister ? "Regjistrohu" : "Kycu"}</h1>
           <span className="airplane-img">
             <Airplane />
           </span>
           {!isRegister && <Login />}
           {!isRegister && (
             <div>
-              Don't have an account?{" "}
+              Nuk keni një llogari?{" "}
               <span
                 onClick={() => {
                   setIsRegister(true);
                 }}
               >
-                Register now
+                Regjistrohu tani
               </span>
             </div>
           )}
           {isRegister && <Register />}
           {isRegister && (
             <div>
-              Have an account?{" "}
-              <span onClick={() => setIsRegister(false)}>login</span>
+              Keni një llogari?{" "}
+              <span onClick={() => setIsRegister(false)}>Kycu</span>
             </div>
           )}
         </div>

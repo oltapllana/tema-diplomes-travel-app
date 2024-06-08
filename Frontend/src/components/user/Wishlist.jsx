@@ -96,7 +96,7 @@ const Wishlist = () => {
                           handleDelete({ planId: plan._id, placeId: place.id })
                         }
                       >
-                        Delete
+                        Fshij
                       </button>
                       <button
                         onClick={() => {
@@ -107,7 +107,7 @@ const Wishlist = () => {
                         }}
                         className="btn pink-btn"
                       >
-                        Check availability
+                        Kontrollo disponueshmërinë
                       </button>
                     </div>
                   </div>

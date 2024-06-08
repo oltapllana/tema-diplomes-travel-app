@@ -62,7 +62,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
           className="book-btn unset-width margin-bottom-10"
           onClick={() => setShowPlaceDetails(false)}
         >
-          Back to places list
+          Kthehu te lista e vendeve
         </button>
         <div className="place-detailss margin-bottom-20">
           <img
@@ -75,7 +75,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
           </div>
         </div>
         <div>
-          <h2 className="bold">Things to do in this place: </h2>
+          <h2 className="bold">Gjërat për të bërë në këtë vend: </h2>
           <div className="grid-3 margin-top-10">
             {place.thingstodo.map((thing) => {
               return (
@@ -110,7 +110,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
                         setAvailability(true);
                       }}
                     >
-                      Set Availability
+                      Cakto numrin e biletave
                     </button>
                   )}
 
@@ -128,7 +128,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
                         setPlaceDetails(thing);
                       }}
                     >
-                      Book now
+                      Rezervo tani
                     </button>
                   )}
                 </div>
