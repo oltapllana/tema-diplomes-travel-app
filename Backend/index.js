@@ -68,9 +68,12 @@ app.post("/register", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    return res
-      .status(201)
-      .json({ message: "User registered successfully", token });
+    return res.status(201).json({
+      message: "User registered successfully",
+      username: newUser.username,
+      token,
+      id: newUser._id,
+    });
   } catch (error) {
     console.error("Error registering user:", error);
     return res.status(500).json({ error: "Internal server error" });
@@ -167,7 +170,7 @@ app.put("/profile/:id", upload.single("profilePicture"), async (req, res) => {
     }
 
     if (req.file) {
-      updatedFields.profilePicture = req.file.filename; // Save the filename of the uploaded image
+      updatedFields.profilePicture = req.file.filename;
     }
 
     for (const key in updatedFields) {

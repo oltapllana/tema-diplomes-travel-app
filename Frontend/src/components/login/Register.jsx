@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { registerUser } from "../../api/users";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -22,6 +24,12 @@ export default function Register() {
     if (response.error) {
       return;
     }
+    localStorage.setItem("role", response.role);
+    localStorage.setItem("authToken", response.token);
+    localStorage.setItem("username", response.username);
+    localStorage.setItem("id", response.id);
+
+    navigate("/");
   };
 
   return (
