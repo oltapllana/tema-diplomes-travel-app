@@ -45,7 +45,7 @@ export default function Login() {
       <input
         type="text"
         name="username"
-        placeholder="username"
+        placeholder="Perdoruesi"
         value={formData.username}
         onChange={handleInputChange}
         required
@@ -53,7 +53,7 @@ export default function Login() {
       <input
         type="password"
         name="password"
-        placeholder="Password"
+        placeholder="Fjalekalimi"
         value={formData.password}
         onChange={handleInputChange}
         required

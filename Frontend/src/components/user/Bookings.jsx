@@ -38,7 +38,7 @@ const Bookings = () => {
   const calculateTotalPrice = (data) => {
     let totalPrice = 0;
     data.forEach((item) => {
-      const numericValue = parseFloat(item.bookedPlace.price.replace("$", ""));
+      const numericValue = parseFloat(item.bookedPlace.prices.replace("$", ""));
       totalPrice += numericValue * item.numTickets;
     });
     setTotalPrice(totalPrice);
@@ -194,7 +194,7 @@ const Bookings = () => {
                       )}
                     </p>
                     <p className="flex">
-                      <Price /> <span>{booking.bookedPlace.price}</span>
+                      <Price /> <span>{booking.bookedPlace.prices}</span>
                     </p>
                   </div>
                   <div className="flex space-between gap-5 align-center booking-footer">
@@ -235,9 +235,9 @@ const Bookings = () => {
                     <span>
                       Cmimi total{" "}
                       {booking.numTickets *
-                        +booking.bookedPlace.price.substring(
+                        +booking.bookedPlace.prices.substring(
                           0,
-                          booking.bookedPlace.price.length - 1
+                          booking.bookedPlace.prices.length - 1
                         )}
                       $
                     </span>

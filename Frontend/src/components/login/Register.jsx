@@ -37,7 +37,7 @@ export default function Register() {
       <input
         type="text"
         name="firstName"
-        placeholder="First Name"
+        placeholder="Emri"
         value={formData.firstName}
         onChange={handleInputChange}
         required
@@ -45,7 +45,7 @@ export default function Register() {
       <input
         type="text"
         name="lastName"
-        placeholder="Last Name"
+        placeholder="Mbiemri"
         value={formData.lastName}
         onChange={handleInputChange}
         required
@@ -53,7 +53,7 @@ export default function Register() {
       <input
         type="text"
         name="username"
-        placeholder="Username"
+        placeholder="Perdoruesi"
         value={formData.username}
         onChange={handleInputChange}
         required
@@ -69,7 +69,7 @@ export default function Register() {
       <input
         type="password"
         name="password"
-        placeholder="Password"
+        placeholder="Fjalekalimi"
         value={formData.password}
         onChange={handleInputChange}
         required

@@ -110,12 +110,12 @@ const AdminBookings = () => {
               {booking.selectedDate} ~ {booking.selectedHour}
             </span>
             <span>{booking.numTickets}</span>
-            <span>{booking.bookedPlace.price}</span>
+            <span>{booking.bookedPlace.prices}</span>
             <span>
               {booking.numTickets *
-                +booking.bookedPlace.price.substring(
+                +booking.bookedPlace.prices.substring(
                   0,
-                  booking.bookedPlace.price.length - 1
+                  booking.bookedPlace.prices.length - 1
                 )}
               $
             </span>
