@@ -9,7 +9,13 @@ const { ObjectId } = require("mongodb");
 
 var app = Express();
 app.use(Express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://book-tickets.vercel.app"],
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
+);
 
 var CONNECTION_STRING =
   "mongodb+srv://oltapllana:Oltapllana123.,@thesis.euffiqk.mongodb.net/?retryWrites=true&w=majority&appName=thesis";
