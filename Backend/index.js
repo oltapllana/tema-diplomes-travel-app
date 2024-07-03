@@ -11,7 +11,7 @@ var app = Express();
 app.use(Express.json());
 app.use(
   cors({
-    origin: ["https://tema-diplomes-travel-app-front.vercel.app/"],
+    origin: ["https://tema-diplomes-travel-app-front.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true,
   })
