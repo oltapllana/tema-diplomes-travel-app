@@ -36,7 +36,7 @@ export default function MainHeader(props) {
   const fetchUserProfile = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/profile/${localStorage.getItem("id")}`,
+        `https://tema-diplomes-travel-app-api.vercel.app/profile/${localStorage.getItem("id")}`,
         {
           method: "GET",
           headers: {
@@ -61,7 +61,7 @@ export default function MainHeader(props) {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://localhost:3000/notifications/${localStorage.getItem("id")}`,
+        `https://tema-diplomes-travel-app-api.vercel.app/notifications/${localStorage.getItem("id")}`,
         {
           method: "GET",
           headers: {

@@ -48,7 +48,7 @@ const Bookings = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://localhost:3000/user/${localStorage.getItem("id")}/bookings`
+        `https://tema-diplomes-travel-app-api.vercel.app/user/${localStorage.getItem("id")}/bookings`
       );
 
       if (!response.ok) {
@@ -86,7 +86,7 @@ const Bookings = () => {
       }
 
       const response = await fetch(
-        `http://localhost:3000/user/${localStorage.getItem(
+        `https://tema-diplomes-travel-app-api.vercel.app/user/${localStorage.getItem(
           "id"
         )}/bookings/${editedBookingId}`,
         {
@@ -125,7 +125,7 @@ const Bookings = () => {
   const handleDelete = async (bookingId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/user/${localStorage.getItem(
+        `https://tema-diplomes-travel-app-api.vercel.app/user/${localStorage.getItem(
           "id"
         )}/bookings/${bookingId}`,
         {

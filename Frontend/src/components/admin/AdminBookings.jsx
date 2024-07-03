@@ -11,7 +11,7 @@ const AdminBookings = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await fetch("http://localhost:3000/bookings");
+        const response = await fetch("https://tema-diplomes-travel-app-api.vercel.app/bookings");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -40,7 +40,7 @@ const AdminBookings = () => {
   };
 
   const getUserById = async (userId) => {
-    const response = await fetch(`http://localhost:3000/user/${userId}`);
+    const response = await fetch(`https://tema-diplomes-travel-app-api.vercel.app/user/${userId}`);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
@@ -56,7 +56,7 @@ const AdminBookings = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/users/${localStorage.getItem(
+        `https://tema-diplomes-travel-app-api.vercel.app/users/${localStorage.getItem(
           "id"
         )}/bookings/${bookingId}`,
         {

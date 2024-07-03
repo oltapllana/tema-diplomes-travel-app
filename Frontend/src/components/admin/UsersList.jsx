@@ -14,7 +14,7 @@ const UsersList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/users");
+        const response = await fetch("https://tema-diplomes-travel-app-api.vercel.app/api/users");
         if (response.ok) {
           const data = await response.json();
           setUsers(data);
@@ -31,7 +31,7 @@ const UsersList = () => {
   const updateUserRole = async (userId, newRole) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/users/${userId}/role`,
+        `https://tema-diplomes-travel-app-api.vercel.app/users/${userId}/role`,
         {
           method: "PUT",
           headers: {

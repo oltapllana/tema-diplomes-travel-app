@@ -17,7 +17,7 @@ const Wishlist = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://localhost:3000/user/${localStorage.getItem("id")}/travel-plans`
+        `https://tema-diplomes-travel-app-api.vercel.app/user/${localStorage.getItem("id")}/travel-plans`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch travel plans");
@@ -33,7 +33,7 @@ const Wishlist = () => {
 
   const handleDelete = async ({ planId, placeId }) => {
     const response = await fetch(
-      `http://localhost:3000/user/${localStorage.getItem(
+      `https://tema-diplomes-travel-app-api.vercel.app/user/${localStorage.getItem(
         "id"
       )}/travel-plans/${planId}/${placeId}`,
       {
@@ -50,7 +50,7 @@ const Wishlist = () => {
     setOpenAvailabilityModal(true);
     const getAvailability = async () => {
       const response = await fetch(
-        `http://localhost:3000/availability/${planId}/${placeId}`
+        `https://tema-diplomes-travel-app-api.vercel.app/availability/${planId}/${placeId}`
       );
       return response.json();
     };

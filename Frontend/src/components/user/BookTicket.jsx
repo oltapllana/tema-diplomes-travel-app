@@ -17,7 +17,7 @@ const BookTicket = (props) => {
     e.preventDefault();
 
     const response = await fetch(
-      `http://localhost:3000/user/${localStorage.getItem("id")}/book/${
+      `https://tema-diplomes-travel-app-api.vercel.app/user/${localStorage.getItem("id")}/book/${
         props.item?.id
       }`,
       {

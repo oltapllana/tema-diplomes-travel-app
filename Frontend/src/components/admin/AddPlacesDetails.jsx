@@ -23,7 +23,7 @@ const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
       }
     );
 
-    const response = await fetch(`http://localhost:3000/places/${placesId}`, {
+    const response = await fetch(`https://tema-diplomes-travel-app-api.vercel.app/places/${placesId}`, {
       method: "POST",
       body: formData,
     });
