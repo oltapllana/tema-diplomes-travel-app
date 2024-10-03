@@ -87,7 +87,7 @@ const AdminBookings = () => {
       </div>
       <div className="admin-table">
         <div className="flex users-list user-title">
-          <span>Përdoruesi</span>
+          <span>Përdoruesit</span>
           <span>Vendi</span>
           <span>Data/Ora</span>
           <span>Biletat</span>

@@ -122,6 +122,7 @@ const Bookings = () => {
     setEditedNumTickets(null);
   };
 
+  
   const handleDelete = async (bookingId) => {
     try {
       const response = await fetch(
