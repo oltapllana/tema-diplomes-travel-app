@@ -41,7 +41,7 @@ const AddPlaces = ({ place, setPlace, setShowAddPlacesDetails }) => {
       setError("All inputs are required");
       return;
     }
-    const response = await fetch("https://tema-diplomes-travel-app-api.vercel.app/places", {
+    const response = await fetch("https://tema-diplomes-travel-app.onrender.com/places", {
       method: "POST",
       body: formData,
     });

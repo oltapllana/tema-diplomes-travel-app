@@ -15,7 +15,7 @@ export const SearchResults = () => {
     setOpenAvailabilityModal(true);
     const getAvailability = async () => {
       const response = await fetch(
-        `https://tema-diplomes-travel-app-api.vercel.app/availability/${planId}/${placeId}`
+        `https://tema-diplomes-travel-app.onrender.com/availability/${planId}/${placeId}`
       );
       return response.json();
     };

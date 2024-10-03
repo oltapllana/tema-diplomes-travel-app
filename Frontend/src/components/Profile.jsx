@@ -12,7 +12,7 @@ const Profile = () => {
     const fetchUserProfile = async () => {
       try {
         const response = await fetch(
-          `https://tema-diplomes-travel-app-api.vercel.app/profile/${localStorage.getItem("id")}`,
+          `https://tema-diplomes-travel-app.onrender.com/profile/${localStorage.getItem("id")}`,
           {
             method: "GET",
             headers: {
@@ -77,7 +77,7 @@ const Profile = () => {
       }
 
       const response = await fetch(
-        `https://tema-diplomes-travel-app-api.vercel.app/profile/${localStorage.getItem("id")}`,
+        `https://tema-diplomes-travel-app.onrender.com/profile/${localStorage.getItem("id")}`,
         {
           method: "PUT",
           body: formData,

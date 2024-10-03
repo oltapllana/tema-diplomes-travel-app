@@ -14,7 +14,7 @@ const Availability = ({
     e.preventDefault();
 
     const response = await fetch(
-      `https://tema-diplomes-travel-app-api.vercel.app/set-availability/${placeId}/${thingToDo.id}`,
+      `https://tema-diplomes-travel-app.onrender.com/set-availability/${placeId}/${thingToDo.id}`,
       {
         method: "POST",
         headers: {

@@ -18,7 +18,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
   const [placeDetails, setPlaceDetails] = useState({});
 
   const addToWishlist = async (thing) => {
-    const response = await fetch("https://tema-diplomes-travel-app-api.vercel.app/travel-plan", {
+    const response = await fetch("https://tema-diplomes-travel-app.onrender.com/travel-plan", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +47,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
     setOpenAvailabilityModal(true);
     const getAvailability = async () => {
       const response = await fetch(
-        `https://tema-diplomes-travel-app-api.vercel.app/availability/${place._id}/${placeId}`
+        `https://tema-diplomes-travel-app.onrender.com/availability/${place._id}/${placeId}`
       );
       return response.json();
     };

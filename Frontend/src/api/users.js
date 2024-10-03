@@ -7,7 +7,7 @@ export const registerUser = async ({
   lastName,
 }) => {
   try {
-    const response = await fetch("https://tema-diplomes-travel-app-api.vercel.app/register", {
+    const response = await fetch("https://tema-diplomes-travel-app.onrender.com/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export const registerUser = async ({
 
 export const loginUser = async (username, password) => {
   try {
-    const response = await fetch("https://tema-diplomes-travel-app-api.vercel.app/login", {
+    const response = await fetch("https://tema-diplomes-travel-app.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export const loginUser = async (username, password) => {
 
 export const deleteUser = async (userId) => {
   try {
-    const response = await fetch(`https://tema-diplomes-travel-app-api.vercel.app/users/${userId}`, {
+    const response = await fetch(`https://tema-diplomes-travel-app.onrender.com/users/${userId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

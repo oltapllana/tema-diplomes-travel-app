@@ -6,7 +6,7 @@ export default function ReviewPlaces({ placeId }) {
   const handleRatingSubmit = async () => {
     try {
       const response = await fetch(
-        `https://tema-diplomes-travel-app-api.vercel.app/api/places/reviews/${placeId}/rating`,
+        `https://tema-diplomes-travel-app.onrender.com/api/places/reviews/${placeId}/rating`,
         {
           method: "POST",
           headers: {

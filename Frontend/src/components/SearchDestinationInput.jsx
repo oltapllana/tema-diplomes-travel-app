@@ -11,7 +11,7 @@ export default function SearchDestinationInput() {
   const handleSearch = async () => {
     try {
       const response = await fetch(
-        `https://tema-diplomes-travel-app-api.vercel.app/search?q=${encodeURIComponent(query)}`
+        `https://tema-diplomes-travel-app.onrender.com/search?q=${encodeURIComponent(query)}`
       );
       if (!response.ok) {
         throw new Error("response was not ok");
