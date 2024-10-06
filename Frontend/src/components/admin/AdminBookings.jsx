@@ -11,7 +11,9 @@ const AdminBookings = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await fetch("https://tema-diplomes-travel-app.onrender.com/bookings");
+        const response = await fetch(
+          "https://tema-diplomes-travel-app.onrender.com/bookings"
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -40,7 +42,9 @@ const AdminBookings = () => {
   };
 
   const getUserById = async (userId) => {
-    const response = await fetch(`https://tema-diplomes-travel-app.onrender.com/user/${userId}`);
+    const response = await fetch(
+      `https://tema-diplomes-travel-app.onrender.com/user/${userId}`
+    );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
@@ -110,13 +114,22 @@ const AdminBookings = () => {
               {booking.selectedDate} ~ {booking.selectedHour}
             </span>
             <span>{booking.numTickets}</span>
-            <span>{booking.bookedPlace.prices}</span>
             <span>
-              {booking.numTickets *
-                +booking.bookedPlace.prices.substring(
-                  0,
-                  booking.bookedPlace.prices.length - 1
-                )}
+              {booking.bookedPlace?.prices || booking.bookedPlace?.price}
+            </span>
+            <span>
+              {booking.bookedPlace?.prices &&
+                booking.numTickets *
+                  +booking.bookedPlace.prices.substring(
+                    0,
+                    booking.bookedPlace.prices.length - 1
+                  )}
+              {booking.bookedPlace?.price &&
+                booking.numTickets *
+                  +booking.bookedPlace.price.substring(
+                    0,
+                    booking.bookedPlace.price.length - 1
+                  )}
               $
             </span>
             <button

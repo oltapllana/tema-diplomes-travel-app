@@ -48,7 +48,7 @@ const PopularPlaces = () => {
       <div className="container position-relative top-65">
         <h1>Vendet</h1>
         {!showDetails && (
-          <div className="grid-3">
+          <div className="places-grid grid-3">
             {places.map((place) => (
               <div key={place.id} className="place-wrapper">
                 <h1 className="margin-0">{place.city}</h1>

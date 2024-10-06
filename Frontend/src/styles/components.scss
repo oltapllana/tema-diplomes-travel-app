@@ -260,3 +260,27 @@ button {
     }
   }
 }
+
+@media (min-width: 800px) and (max-width: 1300px) {
+  .travel-search-wrapper button.search-btn {
+    right: 21%;
+  }
+  .places-grid,
+  .places-admin-list {
+    grid-template-columns: 1fr 1fr;
+  }
+  .container {
+    width: 90%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .place-detailss {
+    display: block;
+  }
+  .add-place-form .flex {
+    flex-direction: column;
+    .align-center {
+      flex-direction: row;
+    }
+  }
+}

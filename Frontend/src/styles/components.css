@@ -250,4 +250,28 @@ button {
   width: 40px;
   height: 40px;
   border-radius: 100%;
+}
+
+@media (min-width: 800px) and (max-width: 1300px) {
+  .travel-search-wrapper button.search-btn {
+    right: 21%;
+  }
+  .places-grid,
+  .places-admin-list {
+    grid-template-columns: 1fr 1fr;
+  }
+  .container {
+    width: 90%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .place-detailss {
+    display: block;
+  }
+  .add-place-form .flex {
+    flex-direction: column;
+  }
+  .add-place-form .flex .align-center {
+    flex-direction: row;
+  }
 }/*# sourceMappingURL=components.css.map */
