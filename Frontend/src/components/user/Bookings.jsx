@@ -48,7 +48,9 @@ const Bookings = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/user/${localStorage.getItem("id")}/bookings`
+        `https://tema-diplomes-travel-app.onrender.com/user/${localStorage.getItem(
+          "id"
+        )}/bookings`
       );
 
       if (!response.ok) {
@@ -122,7 +124,6 @@ const Bookings = () => {
     setEditedNumTickets(null);
   };
 
-  
   const handleDelete = async (bookingId) => {
     try {
       const response = await fetch(
@@ -235,11 +236,18 @@ const Bookings = () => {
                     </div>
                     <span>
                       Cmimi total{" "}
-                      {booking.numTickets *
-                        +booking.bookedPlace.prices.substring(
-                          0,
-                          booking.bookedPlace.prices.length - 1
-                        )}
+                      {booking.bookedPlace?.prices &&
+                        booking.numTickets *
+                          +booking.bookedPlace?.prices?.substring(
+                            0,
+                            booking.bookedPlace?.prices?.length - 1
+                          )}
+                      {booking.bookedPlace?.price &&
+                        booking.numTickets *
+                          +booking.bookedPlace?.price?.substring(
+                            0,
+                            booking.bookedPlace?.price?.length - 1
+                          )}
                       $
                     </span>
                   </div>
