@@ -261,10 +261,7 @@ button {
   }
 }
 
-@media (min-width: 800px) and (max-width: 1300px) {
-  .travel-search-wrapper button.search-btn {
-    right: 21%;
-  }
+@media (min-width: 770px) and (max-width: 1300px) {
   .places-grid,
   .places-admin-list {
     grid-template-columns: 1fr 1fr;
