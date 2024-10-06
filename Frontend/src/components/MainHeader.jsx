@@ -18,6 +18,7 @@ export default function MainHeader(props) {
   const [notifications, setNotifications] = useState([]);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(true);
   const socket = useSocket();
 
   useEffect(() => {
@@ -36,7 +37,9 @@ export default function MainHeader(props) {
   const fetchUserProfile = async () => {
     try {
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/profile/${localStorage.getItem("id")}`,
+        `https://tema-diplomes-travel-app.onrender.com/profile/${localStorage.getItem(
+          "id"
+        )}`,
         {
           method: "GET",
           headers: {
@@ -61,7 +64,9 @@ export default function MainHeader(props) {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/notifications/${localStorage.getItem("id")}`,
+        `https://tema-diplomes-travel-app.onrender.com/notifications/${localStorage.getItem(
+          "id"
+        )}`,
         {
           method: "GET",
           headers: {
@@ -87,69 +92,87 @@ export default function MainHeader(props) {
   return (
     <header className="travel-header">
       {profile?.role === "user" && (
-        <ul>
-          <li>
-            <span onClick={() => navigate("/")}>Faqja kryesore</span>
-          </li>
-          <li>
-            <span onClick={() => navigate("/places")}>Vendet</span>
-          </li>
-          <li>
-            <span onClick={() => navigate("/wishlist")}>Lista e dëshirave</span>
-          </li>
-          <li>
-            <span onClick={() => navigate("/bookings")}>Rezervimet</span>
-          </li>
-          <li>
-            <div
-              onClick={() => {
-                setIsNotificationOpen((prevState) => !prevState);
-                fetchNotifications();
-              }}
-            >
-              <Notification />
-            </div>
-          </li>
-          <li>
-            {!isLoggedin && (
-              <button
-                onClick={() => {
-                  props.setIsShown(true);
-                  navigate("/login-register");
-                }}
-              >
-                Kycu
-              </button>
-            )}
-            {isLoggedin && profile.profilePicture && (
-              <img
-                onClick={() => setIsDropdownOpen((prevState) => !prevState)}
-                src={require(`../../../Backend/uploads/${profile.profilePicture}`)}
-                alt="test"
-              />
-            )}
-            {isLoggedin && !profile.profilePicture && (
-              <FaUserCircle
-                size={30}
-                onClick={() => setIsDropdownOpen((prevState) => !prevState)}
-              />
-            )}
-            {isDropdownOpen && (
-              <div className="user-profile-dropdown">
-                <span onClick={() => navigate("/profile")}>Shiko profilin</span>
-                <span
+        <nav class="navbar">
+          <div
+            class="hamburger"
+            id="hamburger"
+            onClick={() => setIsHamburgerMenuOpen((prevState) => !prevState)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          {isHamburgerMenuOpen && (
+            <ul class="nav-links" id="navLinks">
+              <li>
+                <span onClick={() => navigate("/")}>Faqja kryesore</span>
+              </li>
+              <li>
+                <span onClick={() => navigate("/places")}>Vendet</span>
+              </li>
+              <li>
+                <span onClick={() => navigate("/wishlist")}>
+                  Lista e dëshirave
+                </span>
+              </li>
+              <li>
+                <span onClick={() => navigate("/bookings")}>Rezervimet</span>
+              </li>
+              <li>
+                <div
                   onClick={() => {
-                    localStorage.removeItem("authToken");
-                    setIsLoggedin(false);
-                    navigate("/login-register");
+                    setIsNotificationOpen((prevState) => !prevState);
+                    fetchNotifications();
                   }}
                 >
-                  Ckycu
-                </span>
-              </div>
-            )}
-          </li>
-        </ul>
+                  <Notification />
+                </div>
+              </li>
+              <li>
+                {!isLoggedin && (
+                  <button
+                    onClick={() => {
+                      props.setIsShown(true);
+                      navigate("/login-register");
+                    }}
+                  >
+                    Kycu
+                  </button>
+                )}
+                {isLoggedin && profile.profilePicture && (
+                  <img
+                    onClick={() => setIsDropdownOpen((prevState) => !prevState)}
+                    src={require(`../../../Backend/uploads/${profile.profilePicture}`)}
+                    alt="test"
+                  />
+                )}
+                {isLoggedin && !profile.profilePicture && (
+                  <FaUserCircle
+                    size={30}
+                    onClick={() => setIsDropdownOpen((prevState) => !prevState)}
+                  />
+                )}
+                {isDropdownOpen && (
+                  <div className="user-profile-dropdown">
+                    <span onClick={() => navigate("/profile")}>
+                      Shiko profilin
+                    </span>
+                    <span
+                      onClick={() => {
+                        localStorage.removeItem("authToken");
+                        setIsLoggedin(false);
+                        navigate("/login-register");
+                      }}
+                    >
+                      Ckycu
+                    </span>
+                  </div>
+                )}
+              </li>
+            </ul>
+          )}
+        </nav>
       )}
       {profile?.role === "admin" && (
         <>

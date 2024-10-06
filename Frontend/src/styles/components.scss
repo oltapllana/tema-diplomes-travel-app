@@ -261,6 +261,53 @@ button {
   }
 }
 
+/* Hamburger menu styling */
+.hamburger {
+  cursor: pointer;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: black;
+}
+
+/* Media query for phones */
+@media (max-width: 767px) {
+  .hamburger {
+    display: flex;
+    padding-left: 10px;
+  }
+
+  .travel-header {
+    display: flex;
+  }
+
+  .nav-bar {
+    position: relative;
+    top: 15px;
+  }
+
+  .travel-header ul {
+    flex-direction: column !important;
+    justify-content: flex-start;
+    align-items: start;
+    position: fixed;
+    top: 60px;
+    height: 100%;
+    padding: 2rem;
+    background-color: #ebe9ea;
+    transition: 0.5s;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+}
+
 @media (min-width: 770px) and (max-width: 1300px) {
   .places-grid,
   .places-admin-list {
