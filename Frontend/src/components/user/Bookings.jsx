@@ -196,7 +196,7 @@ const Bookings = () => {
                       )}
                     </p>
                     <p className="flex">
-                      <Price /> <span>{booking.bookedPlace.prices}</span>
+                      <Price /> <span>{booking.bookedPlace?.prices || booking.bookedPlace?.price}</span>
                     </p>
                   </div>
                   <div className="flex space-between gap-5 align-center booking-footer">
