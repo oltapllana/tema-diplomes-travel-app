@@ -293,6 +293,50 @@ button {
   .nav-links.open {
     display: flex;
   }
+  .travel-description h1 {
+    font-weight: 100;
+    font-size: 20px;
+  }
+  .travel-description .travel-search {
+    width: 350px;
+  }
+  .travel-search-wrapper button.search-btn {
+    right: 10%;
+  }
+  .places-grid,
+  .places-admin-list {
+    grid-template-columns: 1fr;
+  }
+  .container {
+    width: 80%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .container.grid-3-1 {
+    display: flex;
+    flex-direction: column;
+  }
+  .place-detailss {
+    display: block;
+  }
+  .place-detailss img {
+    width: 100%;
+  }
+  .add-place-form .flex {
+    flex-direction: column;
+  }
+  .add-place-form .flex .align-center {
+    flex-direction: row;
+  }
+  .wishlist-item-wrapper .wishlist-item .flex {
+    flex-direction: column;
+  }
+  .booking-wrapper {
+    margin-bottom: 60px;
+  }
+  .booking-wrapper .wishlist-item .flex.gap-20 {
+    flex-direction: column;
+  }
 }
 @media (min-width: 770px) and (max-width: 1300px) {
   .places-grid,

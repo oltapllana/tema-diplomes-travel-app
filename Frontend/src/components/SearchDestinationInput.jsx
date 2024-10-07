@@ -29,7 +29,7 @@ export default function SearchDestinationInput() {
       <input
         type="text"
         className="travel-search"
-        placeholder="Kërkoni destinacionin tuaj të ardhshëm..."
+        placeholder="Kërkoni destinacionin tuaj..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
