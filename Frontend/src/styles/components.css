@@ -352,6 +352,9 @@ button {
     flex-direction: column;
     height: 100vh;
   }
+  .user-dashboard {
+    height: 100%;
+  }
   .travel-header ul {
     flex-direction: column !important;
     justify-content: flex-start;

@@ -368,6 +368,9 @@ button {
     flex-direction: column;
     height: 100vh;
   }
+  .user-dashboard {
+    height: 100%;
+  }
 
   .travel-header ul {
     flex-direction: column !important;
@@ -421,7 +424,7 @@ button {
     }
   }
   .add-place-form {
-    .grid2{
+    .grid2 {
       display: flex;
       flex-direction: column;
     }
