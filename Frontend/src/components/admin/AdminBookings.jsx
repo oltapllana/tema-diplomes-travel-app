@@ -67,7 +67,6 @@ const AdminBookings = () => {
           method: "DELETE",
         }
       );
-      console.log("aaaaaaaaaaaaa-------------", response);
 
       if (response.ok) {
         setBookings((prevBookings) =>

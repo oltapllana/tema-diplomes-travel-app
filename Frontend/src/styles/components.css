@@ -314,6 +314,12 @@ button {
     background-color: #fff;
     z-index: 100;
   }
+  .left-navigation {
+    position: fixed;
+    top: 20px;
+    z-index: 99;
+    padding-top: 0;
+  }
   .nav-links li {
     list-style: none;
     padding: 10px 20px;
@@ -328,6 +334,23 @@ button {
   }
   .travel-header {
     display: flex;
+  }
+  .travel-header.admin-header {
+    justify-content: end;
+  }
+  .admin-navigation-dropdown {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    /* border-radius: 8px; */
+    position: absolute;
+    top: 40px;
+    left: 0;
+    display: flex;
+    z-index: 100;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    height: 100vh;
   }
   .travel-header ul {
     flex-direction: column !important;
@@ -376,6 +399,10 @@ button {
   .place-detailss img {
     width: 100%;
   }
+  .add-place-form .grid2 {
+    display: flex;
+    flex-direction: column;
+  }
   .add-place-form .flex {
     flex-direction: column;
   }
@@ -396,6 +423,16 @@ button {
   }
   .aa .profile-container {
     flex-direction: column;
+  }
+  .bb {
+    display: none;
+  }
+  .admin-wrapper {
+    display: flex;
+    width: 100%;
+  }
+  .admin-wrapper .user-dashboard {
+    width: 100%;
   }
   .notifications-wrapper {
     width: 290px;

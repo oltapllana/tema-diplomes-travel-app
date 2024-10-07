@@ -90,7 +90,11 @@ export default function MainHeader(props) {
   };
 
   return (
-    <header className="travel-header">
+    <header
+      className={`travel-header ${
+        profile?.role === "admin" ? "admin-header" : ""
+      }`}
+    >
       {profile?.role === "user" && (
         <nav className="navbar">
           <div

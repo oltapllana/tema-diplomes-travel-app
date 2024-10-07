@@ -10,7 +10,7 @@ const LoginRegister = () => {
 
   return (
     <div className="wrapper">
-      <div className="aa"></div>
+      <div className="bb"></div>
       <div className="login-wrapper">
         <div className="login-container">
           <h1 className="login-title">{isRegister ? "Regjistrohu" : "Kycu"}</h1>

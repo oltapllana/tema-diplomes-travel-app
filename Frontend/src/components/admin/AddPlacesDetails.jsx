@@ -3,7 +3,11 @@ import Plus from "../../assets/admin/Plus";
 import Minus from "../../assets/admin/Minus";
 import Modal from "../Modal";
 
-const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
+const AddPlacesDetails = ({
+  place,
+  setIsAddPlacesDetailsOpen,
+  isModal = false,
+}) => {
   const [thingsToDo, setThingsToDo] = useState([
     { text: "", place: "", image: null, price: "", lat: "", lng: "" },
   ]);
@@ -23,10 +27,13 @@ const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
       }
     );
 
-    const response = await fetch(`https://tema-diplomes-travel-app.onrender.com/places/${placesId}`, {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      `https://tema-diplomes-travel-app.onrender.com/places/${placesId}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
     if (!response.ok) {
       throw new Error("Failed to add text and images");
     }
@@ -136,7 +143,9 @@ const AddPlacesDetails = ({ place, setIsAddPlacesDetailsOpen }) => {
           <button
             onClick={(event) => {
               addTextAndImages(event, place.placesId, thingsToDo);
-              setIsAddPlacesDetailsOpen(false);
+              if (isModal) {
+                setIsAddPlacesDetailsOpen(false);
+              }
             }}
             className="btn blue-btn"
             type="submit"

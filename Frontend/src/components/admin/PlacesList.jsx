@@ -97,6 +97,7 @@ const PlacesList = () => {
           <AddPlacesDetails
             setIsAddPlacesDetailsOpen={setIsAddPlacesDetailsOpen}
             place={place}
+            isModal={true}
           />
         </Modal>
       )}
