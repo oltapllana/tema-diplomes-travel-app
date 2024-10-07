@@ -421,7 +421,9 @@ button {
     display: flex;
   }
   .aa {
-    display: none;
+    .profile-container {
+      flex-direction: column;
+    }
   }
   .notifications-wrapper {
     width: 290px;

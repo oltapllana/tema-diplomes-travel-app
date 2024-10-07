@@ -394,8 +394,8 @@ button {
   .wrapper {
     display: flex;
   }
-  .aa {
-    display: none;
+  .aa .profile-container {
+    flex-direction: column;
   }
   .notifications-wrapper {
     width: 290px;
