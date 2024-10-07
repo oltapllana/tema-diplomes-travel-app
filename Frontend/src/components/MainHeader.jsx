@@ -18,7 +18,7 @@ export default function MainHeader(props) {
   const [notifications, setNotifications] = useState([]);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(true);
+  const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
   const socket = useSocket();
 
   useEffect(() => {
@@ -92,9 +92,9 @@ export default function MainHeader(props) {
   return (
     <header className="travel-header">
       {profile?.role === "user" && (
-        <nav class="navbar">
+        <nav className="navbar">
           <div
-            class="hamburger"
+            className="hamburger"
             id="hamburger"
             onClick={() => setIsHamburgerMenuOpen((prevState) => !prevState)}
           >
@@ -104,74 +104,137 @@ export default function MainHeader(props) {
           </div>
 
           {isHamburgerMenuOpen && (
-            <ul class="nav-links" id="navLinks">
+            <ul className="nav-links mobile" id="navLinks">
               <li>
-                <span onClick={() => navigate("/")}>Faqja kryesore</span>
+                <span
+                  onClick={() => {
+                    setIsHamburgerMenuOpen(false);
+                    navigate("/");
+                  }}
+                >
+                  Faqja kryesore
+                </span>
               </li>
               <li>
-                <span onClick={() => navigate("/places")}>Vendet</span>
+                <span
+                  onClick={() => {
+                    setIsHamburgerMenuOpen(false);
+                    navigate("/places");
+                  }}
+                >
+                  Vendet
+                </span>
               </li>
               <li>
-                <span onClick={() => navigate("/wishlist")}>
+                <span
+                  onClick={() => {
+                    setIsHamburgerMenuOpen(false);
+                    navigate("/wishlist");
+                  }}
+                >
                   Lista e dëshirave
                 </span>
               </li>
               <li>
-                <span onClick={() => navigate("/bookings")}>Rezervimet</span>
-              </li>
-              <li>
-                <div
+                <span
                   onClick={() => {
-                    setIsNotificationOpen((prevState) => !prevState);
-                    fetchNotifications();
+                    setIsHamburgerMenuOpen(false);
+                    navigate("/bookings");
                   }}
                 >
-                  <Notification />
-                </div>
-              </li>
-              <li>
-                {!isLoggedin && (
-                  <button
-                    onClick={() => {
-                      props.setIsShown(true);
-                      navigate("/login-register");
-                    }}
-                  >
-                    Kycu
-                  </button>
-                )}
-                {isLoggedin && profile.profilePicture && (
-                  <img
-                    onClick={() => setIsDropdownOpen((prevState) => !prevState)}
-                    src={require(`../../../Backend/uploads/${profile.profilePicture}`)}
-                    alt="test"
-                  />
-                )}
-                {isLoggedin && !profile.profilePicture && (
-                  <FaUserCircle
-                    size={30}
-                    onClick={() => setIsDropdownOpen((prevState) => !prevState)}
-                  />
-                )}
-                {isDropdownOpen && (
-                  <div className="user-profile-dropdown">
-                    <span onClick={() => navigate("/profile")}>
-                      Shiko profilin
-                    </span>
-                    <span
-                      onClick={() => {
-                        localStorage.removeItem("authToken");
-                        setIsLoggedin(false);
-                        navigate("/login-register");
-                      }}
-                    >
-                      Ckycu
-                    </span>
-                  </div>
-                )}
+                  Rezervimet
+                </span>
               </li>
             </ul>
           )}
+          <ul className="nav-links web" id="navLinks">
+            <li>
+              <span
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Faqja kryesore
+              </span>
+            </li>
+            <li>
+              <span
+                onClick={() => {
+                  navigate("/places");
+                }}
+              >
+                Vendet
+              </span>
+            </li>
+            <li>
+              <span
+                onClick={() => {
+                  navigate("/wishlist");
+                }}
+              >
+                Lista e dëshirave
+              </span>
+            </li>
+            <li>
+              <span
+                onClick={() => {
+                  navigate("/bookings");
+                }}
+              >
+                Rezervimet
+              </span>
+            </li>
+          </ul>
+          <div className="notification-profile">
+            <div
+              className="notification"
+              onClick={() => {
+                setIsNotificationOpen((prevState) => !prevState);
+                fetchNotifications();
+              }}
+            >
+              <Notification />
+            </div>
+
+            {!isLoggedin && (
+              <button
+                onClick={() => {
+                  props.setIsShown(true);
+                  navigate("/login-register");
+                }}
+              >
+                Kycu
+              </button>
+            )}
+            {isLoggedin && profile.profilePicture && (
+              <img
+                onClick={() => setIsDropdownOpen((prevState) => !prevState)}
+                src={require(`../../../Backend/uploads/${profile.profilePicture}`)}
+                alt="Profile"
+              />
+            )}
+            {isLoggedin && !profile.profilePicture && (
+              <FaUserCircle
+                size={30}
+                onClick={() => setIsDropdownOpen((prevState) => !prevState)}
+              />
+            )}
+
+            {isDropdownOpen && (
+              <div className="user-profile-dropdown">
+                <span onClick={() => navigate("/profile")}>Shiko profilin</span>
+                <span
+                  onClick={() => {
+                    localStorage.removeItem("authToken");
+                    setIsLoggedin(false);
+                    navigate("/login-register");
+                  }}
+                >
+                  Ckycu
+                </span>
+              </div>
+            )}
+          </div>
         </nav>
       )}
       {profile?.role === "admin" && (
