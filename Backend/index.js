@@ -1,30 +1,41 @@
 var Express = require("express");
-var Mongoclient = require("mongodb").MongoClient;
+const { MongoClient, ObjectId } = require("mongodb");
 var cors = require("cors");
 const multer = require("multer");
 const bcrypt = require("bcryptjs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
-const { ObjectId } = require("mongodb");
 
 var app = Express();
 app.use(Express.json());
 app.use(cors());
 
 var CONNECTION_STRING =
-  "mongodb+srv://oltapllana:Oltapllana123.,@thesis.euffiqk.mongodb.net/?retryWrites=true&w=majority&appName=thesis";
+  process.env.MONGODB_URI ||
+  "mongodb+srv://oltapllana:Oltapllana123.,@travelcluster.5uymrx3.mongodb.net/?retryWrites=true&w=majority";
 var DATABASENAME = "travelappdb";
+const PORT = process.env.PORT || 8000;
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "fadmgkli845hkjejksdiooi3ljrky";
 
 var database;
 
-app.listen(3000, () => {
-  Mongoclient.connect(CONNECTION_STRING, (error, client) => {
+const startServer = async () => {
+  try {
+    const client = new MongoClient(CONNECTION_STRING);
+    await client.connect();
     database = client.db(DATABASENAME);
-    console.log("Conected------------------------");
-  });
-});
+    console.log("Connected to MongoDB");
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to connect to MongoDB", error);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

@@ -7,7 +7,7 @@ export const registerUser = async ({
   lastName,
 }) => {
   try {
-    const response = await fetch("https://tema-diplomes-travel-app.onrender.com/register", {
+    const response = await fetch("http://localhost:8000/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export const registerUser = async ({
 
 export const loginUser = async (username, password) => {
   try {
-    const response = await fetch("https://tema-diplomes-travel-app.onrender.com/login", {
+    const response = await fetch("http://localhost:8000/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export const loginUser = async (username, password) => {
 
 export const deleteUser = async (userId) => {
   try {
-    const response = await fetch(`https://tema-diplomes-travel-app.onrender.com/users/${userId}`, {
+    const response = await fetch(`http://localhost:8000/users/${userId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
