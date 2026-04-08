@@ -20,12 +20,21 @@ const JWT_SECRET = process.env.JWT_SECRET;
 var database;
 
 const startServer = async () => {
-  try {
-    if (!CONNECTION_STRING || !JWT_SECRET) {
-      throw new Error("Missing required env vars: MONGODB_URI and/or JWT_SECRET");
-    }
+  const missingEnvVars = [];
+  if (!CONNECTION_STRING) missingEnvVars.push("MONGODB_URI");
+  if (!JWT_SECRET) missingEnvVars.push("JWT_SECRET");
 
-    const client = new MongoClient(CONNECTION_STRING);
+  if (missingEnvVars.length > 0) {
+    console.error(
+      `Startup failed: missing required env vars: ${missingEnvVars.join(", ")}`
+    );
+    process.exit(1);
+  }
+
+  try {
+    const client = new MongoClient(CONNECTION_STRING, {
+      serverSelectionTimeoutMS: 10000,
+    });
     await client.connect();
     database = client.db(DATABASENAME);
     console.log("Connected to MongoDB");
@@ -33,7 +42,11 @@ const startServer = async () => {
       console.log(`Server is running on port ${PORT}`);
     });
   } catch (error) {
-    console.error("Failed to connect to MongoDB", error);
+    console.error("Startup failed: unable to connect to MongoDB");
+    console.error(error.message);
+    console.error(
+      "Check MONGODB_URI credentials/host and MongoDB network access (Atlas IP allowlist)."
+    );
     process.exit(1);
   }
 };
