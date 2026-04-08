@@ -4,6 +4,8 @@ import Modal from "./../Modal";
 import Availability from "./Availability";
 import BookTicket from "../user/BookTicket";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 const PlaceDetails = ({ place, setShowPlaceDetails }) => {
   const role = localStorage.getItem("role");
   const [isSaved, setIsSaved] = useState(false);
@@ -18,7 +20,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
   const [placeDetails, setPlaceDetails] = useState({});
 
   const addToWishlist = async (thing) => {
-    const response = await fetch("https://tema-diplomes-travel-app.onrender.com/travel-plan", {
+    const response = await fetch(`${API_BASE_URL}/travel-plan`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +49,7 @@ const PlaceDetails = ({ place, setShowPlaceDetails }) => {
     setOpenAvailabilityModal(true);
     const getAvailability = async () => {
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/availability/${place._id}/${placeId}`
+        `${API_BASE_URL}/availability/${place._id}/${placeId}`
       );
       return response.json();
     };

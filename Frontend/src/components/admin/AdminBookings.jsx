@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import { useSocket } from "../../SocketsContext";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 const AdminBookings = () => {
   const socket = useSocket();
   const [bookings, setBookings] = useState([]);
@@ -11,9 +13,7 @@ const AdminBookings = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await fetch(
-          "https://tema-diplomes-travel-app.onrender.com/bookings"
-        );
+        const response = await fetch(`${API_BASE_URL}/bookings`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -43,7 +43,7 @@ const AdminBookings = () => {
 
   const getUserById = async (userId) => {
     const response = await fetch(
-      `https://tema-diplomes-travel-app.onrender.com/user/${userId}`
+      `${API_BASE_URL}/user/${userId}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -60,7 +60,7 @@ const AdminBookings = () => {
 
     try {
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/users/${localStorage.getItem(
+        `${API_BASE_URL}/users/${localStorage.getItem(
           "id"
         )}/bookings/${bookingId}`,
         {

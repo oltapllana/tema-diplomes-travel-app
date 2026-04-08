@@ -3,6 +3,8 @@ import Plus from "../../assets/admin/Plus";
 import Minus from "../../assets/admin/Minus";
 import Modal from "../Modal";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 const AddPlacesDetails = ({
   place,
   setIsAddPlacesDetailsOpen,
@@ -28,7 +30,7 @@ const AddPlacesDetails = ({
     );
 
     const response = await fetch(
-      `https://tema-diplomes-travel-app.onrender.com/places/${placesId}`,
+      `${API_BASE_URL}/places/${placesId}`,
       {
         method: "POST",
         body: formData,

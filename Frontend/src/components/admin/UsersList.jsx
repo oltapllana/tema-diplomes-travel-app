@@ -5,6 +5,8 @@ import Modal from "./../Modal";
 import Select from "react-select";
 import { deleteUser } from "../../api/users";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 const UsersList = () => {
   const [users, setUsers] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -14,7 +16,7 @@ const UsersList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("https://tema-diplomes-travel-app.onrender.com/api/users");
+        const response = await fetch(`${API_BASE_URL}/api/users`);
         if (response.ok) {
           const data = await response.json();
           setUsers(data);
@@ -31,7 +33,7 @@ const UsersList = () => {
   const updateUserRole = async (userId, newRole) => {
     try {
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/users/${userId}/role`,
+        `${API_BASE_URL}/users/${userId}/role`,
         {
           method: "PUT",
           headers: {

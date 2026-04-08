@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 export default function ReviewPlaces({ placeId }) {
   const [rating, setRating] = useState(0);
 
   const handleRatingSubmit = async () => {
     try {
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/api/places/reviews/${placeId}/rating`,
+        `${API_BASE_URL}/api/places/reviews/${placeId}/rating`,
         {
           method: "POST",
           headers: {

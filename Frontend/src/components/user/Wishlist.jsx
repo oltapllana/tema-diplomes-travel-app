@@ -4,6 +4,8 @@ import Modal from "./../Modal";
 import BookTicket from "./BookTicket";
 import Empty from "../Empty";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 const Wishlist = () => {
   const [travelPlans, setTravelPlans] = useState([]);
   const [tickets, setTickets] = useState(0);
@@ -17,7 +19,7 @@ const Wishlist = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/user/${localStorage.getItem("id")}/travel-plans`
+        `${API_BASE_URL}/user/${localStorage.getItem("id")}/travel-plans`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch travel plans");
@@ -33,7 +35,7 @@ const Wishlist = () => {
 
   const handleDelete = async ({ planId, placeId }) => {
     const response = await fetch(
-      `https://tema-diplomes-travel-app.onrender.com/user/${localStorage.getItem(
+      `${API_BASE_URL}/user/${localStorage.getItem(
         "id"
       )}/travel-plans/${planId}/${placeId}`,
       {
@@ -50,7 +52,7 @@ const Wishlist = () => {
     setOpenAvailabilityModal(true);
     const getAvailability = async () => {
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/availability/${planId}/${placeId}`
+        `${API_BASE_URL}/availability/${planId}/${placeId}`
       );
       return response.json();
     };

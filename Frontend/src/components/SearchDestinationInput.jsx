@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../SearchContext";
 import Search from "../assets/Search";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 export default function SearchDestinationInput() {
   const [query, setQuery] = useState("");
   const { setResults } = useContext(SearchContext);
@@ -11,7 +13,7 @@ export default function SearchDestinationInput() {
   const handleSearch = async () => {
     try {
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/search?q=${encodeURIComponent(query)}`
+        `${API_BASE_URL}/search?q=${encodeURIComponent(query)}`
       );
       if (!response.ok) {
         throw new Error("response was not ok");

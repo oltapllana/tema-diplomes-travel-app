@@ -4,6 +4,8 @@ import MainHeader from "./MainHeader";
 import BookTicket from "./user/BookTicket";
 import Empty from "./Empty";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 export const SearchResults = () => {
   const [openAvailabilityModal, setOpenAvailabilityModal] = useState(false);
   const [tickets, setTickets] = useState(0);
@@ -15,7 +17,7 @@ export const SearchResults = () => {
     setOpenAvailabilityModal(true);
     const getAvailability = async () => {
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/availability/${planId}/${placeId}`
+        `${API_BASE_URL}/availability/${planId}/${placeId}`
       );
       return response.json();
     };

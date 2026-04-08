@@ -1,6 +1,8 @@
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 export const getPlaces = async () => {
   try {
-    const response = await fetch("http://localhost:8000/api/data");
+    const response = await fetch(`${API_BASE_URL}/api/data`);
     return response.json();
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -9,9 +11,7 @@ export const getPlaces = async () => {
 
 export const getCountryData = async (countryName) => {
   try {
-    const response = await fetch(
-      `http://localhost:8000/country/${countryName}`
-    );
+    const response = await fetch(`${API_BASE_URL}/country/${countryName}`);
     if (!response.ok) {
       throw new Error("Failed to fetch data");
     }

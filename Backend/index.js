@@ -1,5 +1,6 @@
 var Express = require("express");
 const { MongoClient, ObjectId } = require("mongodb");
+require("dotenv").config();
 var cors = require("cors");
 const multer = require("multer");
 const bcrypt = require("bcryptjs");
@@ -10,18 +11,20 @@ var app = Express();
 app.use(Express.json());
 app.use(cors());
 
-var CONNECTION_STRING =
-  process.env.MONGODB_URI ||
-  "mongodb+srv://oltapllana:Oltapllana123.,@travelcluster.5uymrx3.mongodb.net/?retryWrites=true&w=majority";
+var CONNECTION_STRING = process.env.MONGODB_URI;
 var DATABASENAME = "travelappdb";
 const PORT = process.env.PORT || 8000;
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "fadmgkli845hkjejksdiooi3ljrky";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 var database;
 
 const startServer = async () => {
   try {
+    if (!CONNECTION_STRING || !JWT_SECRET) {
+      throw new Error("Missing required env vars: MONGODB_URI and/or JWT_SECRET");
+    }
+
     const client = new MongoClient(CONNECTION_STRING);
     await client.connect();
     database = client.db(DATABASENAME);

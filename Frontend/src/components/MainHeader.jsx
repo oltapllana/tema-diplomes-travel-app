@@ -8,6 +8,8 @@ import Notification from "../assets/Notification";
 import Notifications from "./Notifications";
 import { FaUserCircle } from "react-icons/fa";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 export default function MainHeader(props) {
   const navigate = useNavigate();
   const authToken = localStorage.getItem("authToken");
@@ -37,7 +39,7 @@ export default function MainHeader(props) {
   const fetchUserProfile = async () => {
     try {
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/profile/${localStorage.getItem(
+        `${API_BASE_URL}/profile/${localStorage.getItem(
           "id"
         )}`,
         {
@@ -64,7 +66,7 @@ export default function MainHeader(props) {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/notifications/${localStorage.getItem(
+        `${API_BASE_URL}/notifications/${localStorage.getItem(
           "id"
         )}`,
         {

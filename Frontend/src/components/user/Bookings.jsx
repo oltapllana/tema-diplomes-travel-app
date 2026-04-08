@@ -9,6 +9,8 @@ import { io } from "socket.io-client";
 import { useSocket } from "../../SocketsContext";
 import Empty from "../Empty";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -48,7 +50,7 @@ const Bookings = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/user/${localStorage.getItem(
+        `${API_BASE_URL}/user/${localStorage.getItem(
           "id"
         )}/bookings`
       );
@@ -88,7 +90,7 @@ const Bookings = () => {
       }
 
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/user/${localStorage.getItem(
+        `${API_BASE_URL}/user/${localStorage.getItem(
           "id"
         )}/bookings/${editedBookingId}`,
         {
@@ -127,7 +129,7 @@ const Bookings = () => {
   const handleDelete = async (bookingId) => {
     try {
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/user/${localStorage.getItem(
+        `${API_BASE_URL}/user/${localStorage.getItem(
           "id"
         )}/bookings/${bookingId}`,
         {

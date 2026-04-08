@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Modal from "./../Modal";
 import CustomDateRange from "./../CustomDateRange";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 const BookTicket = (props) => {
   const [numTickets, setNumTickets] = useState(0);
   const [selectedDate, setSelectedDate] = useState("");
@@ -17,7 +19,7 @@ const BookTicket = (props) => {
     e.preventDefault();
 
     const response = await fetch(
-      `https://tema-diplomes-travel-app.onrender.com/user/${localStorage.getItem("id")}/book/${
+      `${API_BASE_URL}/user/${localStorage.getItem("id")}/book/${
         props.item?.id
       }`,
       {

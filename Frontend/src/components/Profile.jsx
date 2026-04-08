@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { FaUserCircle, FaUpload } from "react-icons/fa";
 import MainHeader from "./MainHeader";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -12,7 +14,7 @@ const Profile = () => {
     const fetchUserProfile = async () => {
       try {
         const response = await fetch(
-          `https://tema-diplomes-travel-app.onrender.com/profile/${localStorage.getItem("id")}`,
+          `${API_BASE_URL}/profile/${localStorage.getItem("id")}`,
           {
             method: "GET",
             headers: {
@@ -77,7 +79,7 @@ const Profile = () => {
       }
 
       const response = await fetch(
-        `https://tema-diplomes-travel-app.onrender.com/profile/${localStorage.getItem("id")}`,
+        `${API_BASE_URL}/profile/${localStorage.getItem("id")}`,
         {
           method: "PUT",
           body: formData,

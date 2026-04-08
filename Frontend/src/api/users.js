@@ -1,3 +1,5 @@
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 export const registerUser = async ({
   username,
   email,
@@ -7,7 +9,7 @@ export const registerUser = async ({
   lastName,
 }) => {
   try {
-    const response = await fetch("http://localhost:8000/register", {
+    const response = await fetch(`${API_BASE_URL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +33,7 @@ export const registerUser = async ({
 
 export const loginUser = async (username, password) => {
   try {
-    const response = await fetch("http://localhost:8000/login", {
+    const response = await fetch(`${API_BASE_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +54,7 @@ export const loginUser = async (username, password) => {
 
 export const deleteUser = async (userId) => {
   try {
-    const response = await fetch(`http://localhost:8000/users/${userId}`, {
+    const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

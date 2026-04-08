@@ -5,6 +5,8 @@ import Plus from "../../assets/admin/Plus";
 import Minus from "../../assets/admin/Minus";
 import MainHeader from "./../MainHeader";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 const AddPlaces = ({ place, setPlace, setShowAddPlacesDetails }) => {
   const [formDatas, setFormData] = useState({
     title: "",
@@ -41,7 +43,7 @@ const AddPlaces = ({ place, setPlace, setShowAddPlacesDetails }) => {
       setError("All inputs are required");
       return;
     }
-    const response = await fetch("https://tema-diplomes-travel-app.onrender.com/places", {
+    const response = await fetch(`${API_BASE_URL}/places`, {
       method: "POST",
       body: formData,
     });

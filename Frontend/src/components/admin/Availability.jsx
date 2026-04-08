@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import CustomDateRange from "../CustomDateRange";
 import Modal from "./../Modal";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 const Availability = ({
   thingToDo,
   setAvailability,
@@ -14,7 +16,7 @@ const Availability = ({
     e.preventDefault();
 
     const response = await fetch(
-      `https://tema-diplomes-travel-app.onrender.com/set-availability/${placeId}/${thingToDo.id}`,
+      `${API_BASE_URL}/set-availability/${placeId}/${thingToDo.id}`,
       {
         method: "POST",
         headers: {
